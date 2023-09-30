@@ -20,7 +20,7 @@ const initI18next = async (lng: string, ns: string) => {
 export async function useTranslation(
   lng: string,
   ns: string,
-  options: { [key: string]: string } = { returnObjects: true }
+  options: { [key: string]: string } = {}
 ) {
   const i18nextInstance = await initI18next(lng, ns);
   return {
