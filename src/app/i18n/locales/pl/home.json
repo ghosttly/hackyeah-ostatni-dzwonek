@@ -1,3 +1,15 @@
 {
-  "title": "Ostatni dzwonek"
+  "heroTitle": {
+    "heading": "Stadi  - AI-bot, Twój doradca wyboru",
+    "subHeading": "wymarzonego kierunku studiów."
+  },
+
+  "heroParagraphSentences": [
+    "Podejmowanie ważnych decyzji z radością i jasnością.",
+    "Nie daj się terminom i niepewności w doborowym towarzystwie.",
+    "Twoja przyszłość zaczyna się teraz.",
+    "Ostatni dzwonek!"
+  ],
+  "heroParagraph": "Podejmowanie ważnych decyzji z radością i jasnością. Nie daj się terminom i niepewności w doborowym towarzystwie. Twoja przyszłość zaczyna się teraz. Ostatni dzwonek!",
+  "ctaBtn": "Rozpocznij chat"
 }

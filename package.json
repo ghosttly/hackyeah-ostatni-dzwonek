@@ -15,6 +15,7 @@
     "@types/three": "^0.156.0",
     "accept-language": "^3.0.18",
     "ai": "^2.2.13",
+    "clsx": "^2.0.0",
     "country-flag-icons": "^1.5.7",
     "graphql-zeus": "latest",
     "i18next": "^23.5.1",
@@ -24,6 +25,7 @@
     "react": "latest",
     "react-dom": "latest",
     "react-i18next": "^13.2.2",
+    "tailwind-merge": "^1.14.0",
     "three": "^0.157.0",
     "zustand": "^4.4.1"
   },
@@ -35,6 +37,7 @@
     "eslint": "latest",
     "eslint-config-next": "latest",
     "postcss": "latest",
+    "tailwind-scrollbar": "^3.0.5",
     "tailwindcss": "latest",
     "typescript": "latest"
   }

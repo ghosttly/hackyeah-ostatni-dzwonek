@@ -1,7 +1,7 @@
 import React from "react";
 import { NextPage } from "next";
-import { Chat } from "@/components/Chat";
-import { useTranslation } from "@/app/i18n";
+import { Chat } from "@/src/components/Chat";
+import { useTranslation } from "@/src/app/i18n";
 
 const ChatPage = async ({ params: { lng } }: { params: { lng: string } }) => {
   const { t } = await useTranslation(lng, " chat");

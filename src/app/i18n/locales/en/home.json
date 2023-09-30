@@ -1,3 +1,14 @@
 {
-  "title": "Last bell"
+  "heroTitle": {
+    "heading": "Stadi - AI-bot, your advisor for choosing",
+    "subHeading": "your dream field of study."
+  },
+  "heroParagraphSentences": [
+    "Make important decisions with joy and clarity.",
+    "Don't give in to deadlines and uncertainty in good company.",
+    "Your future starts now. Last call!",
+    "The last call!"
+  ],
+  "ctaBtn": "Start the conversation",
+  "heroParagraph": "  "
 }

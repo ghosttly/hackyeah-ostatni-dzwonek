@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Inter, VT323, Blinker } from "next/font/google";
 import { dir } from "i18next";
 
-import { Background } from "@/components/background";
+import { Background } from "@/src/components/background";
 
 const languages = ["pl", "en"];
 
@@ -15,7 +15,7 @@ const vt323 = VT323({
 });
 const blinker = Blinker({
   variable: "--blinker-font",
-  weight: ["400", "700"],
+  weight: ["400", "600", "700"],
   subsets: ["latin"],
 });
 export const metadata: Metadata = {

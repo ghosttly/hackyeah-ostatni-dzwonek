@@ -3,6 +3,7 @@
 import React from "react";
 import { Scene } from "./Scene";
 import { useChat } from "ai/react";
+import { Message } from "./Message";
 export const Chat = () => {
   const { messages, input, handleInputChange, handleSubmit } = useChat();
   console.log(messages);
@@ -10,18 +11,19 @@ export const Chat = () => {
   return (
     <>
       <div className="absolute top-0 text-black left-0 z-10 w-full h-full lg:relative lg:w-1/2 p-1  ">
-        <div className="h-full  border-solid p-4 rounded-lg border-2 flex flex-col">
-          <div className=" p-2 grow w-full border-solid border-2 rounded-lg">
+        <div className="h-full p-4 rounded-lg  flex flex-col">
+          <div className=" p-2 grow w-full overflow-y-auto border-solid border-2 scrollbar scrollbar-track-transparent scrollbar-thumb-main-blue-b scrollbar-rounded-md border-main-blue-b rounded-lg bg-[#FFFFFF80] ">
             {messages.map((message) => (
-              <div key={message.id} className="transition-all">
-                {message.role === "user" ? "User: " : "AI: "}
-                {message.content}
-              </div>
+              <Message
+                key={message.id}
+                msg={message.content}
+                isUser={message.role === "user"}
+              />
             ))}
           </div>
           <form
             onSubmit={handleSubmit}
-            className="mt-4 p-2  border-solid border-2 rounded-lg"
+            className="mt-4 p-2  border-solid border-2 rounded-lg bg-slate-50"
           >
             <input value={input} onChange={handleInputChange} />
             <button type="submit">Send</button>

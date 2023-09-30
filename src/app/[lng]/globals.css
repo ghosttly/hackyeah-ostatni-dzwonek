@@ -8,6 +8,25 @@
   --background-end-rgb: 255, 255, 255;
 }
 
+html {
+  scroll-behavior: smooth;
+  font-size: 62.5%;
+  -webkit-text-size-adjust: 62.5%;
+  text-size-adjust: none;
+  font-variant-ligatures: none;
+  -webkit-font-variant-ligatures: none;
+  -webkit-tap-highlight-color: transparent;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  font-smoothing: antialiased;
+  -webkit-font-smoothing: antialiased;
+  text-shadow: rgba(0, 0, 0, 0.01) 0 0 1px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
