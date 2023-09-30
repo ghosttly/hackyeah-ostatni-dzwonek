@@ -1,6 +1,5 @@
 import Link from "next/link";
 
-import { Navbar } from "@/src/components/Navbar";
 import { useTranslation } from "../../i18n";
 import { overwievLinks } from "@/src/data";
 

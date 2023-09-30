@@ -1,4 +1,4 @@
-import { Chain, DialogueRole } from "@/zeus";
+import { Chain, DialogueRole } from "@/src/zeus";
 
 const URL = "http://25.57.229.254:8080/graphql";
 const headers = {
