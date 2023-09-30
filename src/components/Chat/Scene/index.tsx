@@ -3,26 +3,37 @@
 import React, { Suspense, useEffect } from "react";
 import { Stage, useAnimations, useGLTF } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-// import { div } from "three/examples/jsm/nodes/Nodes.js";
+import { useStadiStore } from "@/src/store/useStadiAnimations";
+
+useGLTF.preload("/typo_mozefixed2.glb");
 
 export const Scene = () => {
   return (
     <Canvas shadows>
       <Suspense fallback={null}>
-        <Stage shadows>{/* <Model /> */}</Stage>
+        <Stage shadows>
+          <Model />
+        </Stage>
       </Suspense>
     </Canvas>
   );
 };
 
-// const Model = () => {
-//   //   const { scene, animations } = useGLTF("/typo.glb");
-//   //   const { actions } = useAnimations(animations, scene);
-//   //   useEffect(() => {
-//   //     console.log(actions);
-//   //     // actions["Death"]?.reset().play();
-//   //   }, []);
+const Model = () => {
+  const { stadiActions, initStadiAnimations, playAction } = useStadiStore(
+    (state) => ({
+      stadiActions: state.stadiActions,
+      initStadiAnimations: state.initStadiAnimations,
+      playAction: state.playAction,
+    })
+  );
+  const { scene, animations } = useGLTF("/typo_mozefixed2.glb");
+  const { actions } = useAnimations(animations, scene);
 
-//   //   return <primitive object={null}></primitive>;
-//   return <div></div>;
-// };
+  console.log(stadiActions);
+  useEffect(() => {
+    initStadiAnimations(actions);
+  }, []);
+
+  return <primitive object={scene}></primitive>;
+};
