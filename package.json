@@ -14,10 +14,12 @@
     "@react-three/fiber": "^8.14.3",
     "ai": "^2.2.13",
     "graphql-zeus": "latest",
+    "i18next": "^23.5.1",
     "next": "latest",
     "openai": "^4.11.0",
     "react": "latest",
     "react-dom": "latest",
+    "react-i18next": "^13.2.2",
     "three": "^0.157.0",
     "zustand": "^4.4.1"
   },
