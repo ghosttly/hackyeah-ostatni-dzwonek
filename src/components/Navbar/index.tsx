@@ -14,31 +14,33 @@ export const Navbar: FC<{ lng: string }> = ({ lng }) => {
 
   return (
     <div className="p-2 px-5 w-full absolute top-0 left-0 z-[100] ">
-      <div className="ml-auto w-max">
-        {languages
-          .filter((l) => lng !== l)
-          .map((l) => {
-            return (
-              <span key={l}>
-                <Link
-                  className="flex text-[1.6rem] items-center justify-center gap-2 text-black font-semibold"
-                  href={`/${l}${pathname === "/" ? "" : "/" + pathname}`}
-                >
-                  {l === "en" ? (
-                    <div className="w-6 h-6 flex">
-                      <US />
-                    </div>
-                  ) : (
-                    <div className="h-6 w-6 flex">
-                      <PL />
-                    </div>
-                  )}
-                  <span className="h-min">{l.toUpperCase()}</span>
-                </Link>
-              </span>
-            );
-          })}
-      </div>
+      {!pathname.includes("chat") ? (
+        <div className="ml-auto w-max">
+          {languages
+            .filter((l) => lng !== l)
+            .map((l) => {
+              return (
+                <span key={l}>
+                  <Link
+                    className="flex text-[1.6rem] items-center justify-center gap-2 text-black font-semibold"
+                    href={`/${l}${pathname === "/" ? "" : "/" + pathname}`}
+                  >
+                    {l === "en" ? (
+                      <div className="w-6 h-6 flex">
+                        <US />
+                      </div>
+                    ) : (
+                      <div className="h-6 w-6 flex">
+                        <PL />
+                      </div>
+                    )}
+                    <span className="h-min">{l.toUpperCase()}</span>
+                  </Link>
+                </span>
+              );
+            })}
+        </div>
+      ) : null}
     </div>
   );
 };
