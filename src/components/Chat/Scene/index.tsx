@@ -3,7 +3,6 @@
 import React, { Suspense, useEffect } from "react";
 import { Stage, useAnimations, useGLTF } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-useGLTF.preload("/typo.glb");
 
 export const Scene = () => {
   return (
