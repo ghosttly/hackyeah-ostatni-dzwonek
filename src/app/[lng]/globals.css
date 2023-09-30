@@ -9,6 +9,7 @@
 }
 
 html {
+  overflow: hidden;
   scroll-behavior: smooth;
   font-size: 62.5%;
   -webkit-text-size-adjust: 62.5%;

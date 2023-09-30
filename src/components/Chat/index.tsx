@@ -1,18 +1,24 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Scene } from "./Scene";
 import { useChat } from "ai/react";
 import { Message } from "./Message";
 
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { Hearth } from "../assets/icons/Hearth";
 export const Chat = () => {
-  const [open, setOpen] = useState(false);
-  const { messages, input, handleInputChange, handleSubmit } = useChat({
-    onFinish: () => handleMsgContainerScroll(),
-    onResponse: () => handleMsgContainerScroll(),
-  });
+  const [showBubble, setShowBubble] = useState(false);
+  const { messages, input, handleInputChange, handleSubmit, isLoading } =
+    useChat({
+      onFinish: () => handleStreamfinish(),
+      onResponse: () => handleMsgContainerScroll(),
+    });
+
+  const handleStreamfinish = () => {
+    handleMsgContainerScroll();
+  };
 
   const handleMsgContainerScroll = () => {
     if (msgContainerRef.current)
@@ -21,6 +27,11 @@ export const Chat = () => {
         behavior: "smooth",
       });
   };
+
+  useEffect(() => {
+    if (showBubble) setTimeout(() => setShowBubble(false), 1500);
+  }, [showBubble]);
+
   const msgContainerRef = useRef<HTMLDivElement | null>(null);
   const pathname = usePathname();
   return (
@@ -75,20 +86,25 @@ export const Chat = () => {
                 />
               ))}
             </div>
-            <div className=" h-[5.8rem] p-[0.6rem]">
+            <div className=" h-[5.8rem] p-[0.6rem] flex gap-[0.8rem]">
               <form
                 onSubmit={(e) => {
                   handleSubmit(e), handleMsgContainerScroll();
                 }}
-                className="h-full bg-white rounded-full p-[0.4rem] px-[1rem] flex"
+                className="h-full bg-white rounded-full p-[0.4rem] px-[1rem] flex grow "
               >
                 <input
+                  disabled={isLoading}
                   value={input}
                   onChange={handleInputChange}
                   className="grow text-[1.6rem]"
                 />
                 <button type="submit">Send</button>
               </form>
+              <Hearth
+                showBubble={showBubble}
+                onClick={() => setShowBubble((p) => !p)}
+              />
             </div>
           </div>
         </div>
