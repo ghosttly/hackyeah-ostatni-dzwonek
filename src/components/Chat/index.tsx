@@ -1,16 +1,12 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React from "react";
 import { Scene } from "./Scene";
 import { useChat } from "ai/react";
 export const Chat = () => {
-  const { messages, input, handleInputChange, handleSubmit } = useChat({
-    api: "/chat/api",
-  });
-  // const [messages, setMessages] = useState<string[]>([]);
+  const { messages, input, handleInputChange, handleSubmit } = useChat();
+  console.log(messages);
 
-  const updateRef = useRef<HTMLInputElement>(null);
-  const ref = useRef<HTMLFormElement>(null);
   return (
     <>
       <div className="absolute top-0 text-black left-0 z-10 w-full h-full lg:relative lg:w-1/2 p-1 bg-slate-50 ">
@@ -33,7 +29,7 @@ export const Chat = () => {
         </div>
       </div>
 
-      <div className=" h-full w-full lg:w-1/2 ">
+      <div className="h-full w-full lg:w-1/2 ">
         <Scene />
       </div>
     </>
