@@ -5,7 +5,6 @@ import { Scene } from "./Scene";
 import { useChat } from "ai/react";
 export const Chat = () => {
   const { messages, input, handleInputChange, handleSubmit } = useChat();
-  console.log(messages);
 
   return (
     <>

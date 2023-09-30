@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect } from "react";
 import { Stage, useAnimations, useGLTF } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 useGLTF.preload("/typo.glb");
@@ -20,6 +20,10 @@ export const Scene = () => {
 const Model = () => {
   const { scene, animations } = useGLTF("/typo.glb");
   const { actions } = useAnimations(animations, scene);
+  useEffect(() => {
+    console.log(actions);
+    // actions["Death"]?.reset().play();
+  }, []);
 
-  return <primitive object={scene} scale={[0.1, 0.1, 0.1]}></primitive>;
+  return <primitive object={scene}></primitive>;
 };

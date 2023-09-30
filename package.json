@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "zeus": "zeus http://25.57.229.254:8080/graphql ./src --ts"
   },
   "dependencies": {
     "@nanostores/react": "github:ai/react",
