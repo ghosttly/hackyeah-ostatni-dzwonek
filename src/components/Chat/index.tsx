@@ -8,7 +8,9 @@ import { Message } from "./Message";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Hearth } from "../assets/icons/Hearth";
+import { useBackend } from "@/src/app/api/chat/useBackend";
 export const Chat = () => {
+  const { praiseTheconverstaion } = useBackend();
   const [showBubble, setShowBubble] = useState(false);
   const { messages, input, handleInputChange, handleSubmit, isLoading } =
     useChat({
@@ -44,7 +46,9 @@ export const Chat = () => {
   };
 
   useEffect(() => {
-    if (showBubble) setTimeout(() => setShowBubble(false), 2000);
+    if (showBubble) {
+      setTimeout(() => setShowBubble(false), 2000);
+    }
   }, [showBubble]);
 
   const msgContainerRef = useRef<HTMLDivElement | null>(null);
@@ -87,7 +91,7 @@ export const Chat = () => {
                 height={56}
                 alt="stradi bot"
               />
-              <h3 className=" text-[3.2rem] pl-[1.4rem] font-v323 ">Stradi</h3>
+              <h3 className=" text-[3.2rem] pl-[1.4rem] font-v323 ">Stadi</h3>
             </div>
             <div
               ref={msgContainerRef}
@@ -114,7 +118,7 @@ export const Chat = () => {
                   onChange={handleInputChange}
                   className="grow text-[1.6rem]"
                 />
-                <button type="submit">Send</button>
+                {/* <button type="submit">Send</button> */}
               </form>
               <Hearth
                 showBubble={showBubble}
