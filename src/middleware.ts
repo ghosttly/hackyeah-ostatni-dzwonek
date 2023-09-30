@@ -3,10 +3,10 @@ import acceptLanguage from "accept-language";
 import { fallbackLng, languages, cookieName } from "./app/i18n/settings";
 
 acceptLanguage.languages(languages);
-
+const PUBLIC_FILE = /\.(.*)$/;
 export const config = {
   // matcher: '/:lng*'
-  matcher: ["/((?!api|_next/static|_next/image|assets|favicon.ico|sw.js).*)"],
+  matcher: ["/((?!api|_next/static|_next/images|assets|favicon.ico|sw.js).*)"],
 };
 
 export function middleware(req: NextRequest) {
@@ -15,7 +15,9 @@ export function middleware(req: NextRequest) {
     lng = acceptLanguage.get(req?.cookies?.get(cookieName)?.value ?? "");
   if (!lng) lng = acceptLanguage.get(req.headers.get("Accept-Language"));
   if (!lng) lng = fallbackLng;
-
+  if (PUBLIC_FILE.test(req.nextUrl.pathname)) {
+    return;
+  }
   // Redirect if lng in path is not supported
   if (
     !languages.some((loc) => req.nextUrl.pathname.startsWith(`/${loc}`)) &&

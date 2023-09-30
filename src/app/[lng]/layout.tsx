@@ -2,6 +2,8 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { dir } from "i18next";
+import Image from "next/image";
+import { Background } from "@/components/background";
 
 const languages = ["pl", "en"];
 
@@ -21,7 +23,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang={lng} dir={dir(lng)}>
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <Background />
+
+        {children}
+      </body>
     </html>
   );
 }
