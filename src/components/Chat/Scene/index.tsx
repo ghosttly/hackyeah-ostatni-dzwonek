@@ -4,7 +4,7 @@ import React, { Suspense, useEffect } from "react";
 import { Stage, useAnimations, useGLTF } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { useStadiStore } from "@/src/store/useStadiAnimations";
-useGLTF.preload("/typo_bez_ronk.glb");
+useGLTF.preload("/model.glb");
 
 export const Scene = () => {
   return (
@@ -26,9 +26,8 @@ const Model = () => {
       playAction: state.playAction,
     })
   );
-  const { scene, animations } = useGLTF("/typo_bez_ronk.glb");
+  const { scene, animations } = useGLTF("/model.glb");
   const { actions } = useAnimations(animations, scene);
-  console.log(actions);
   playAction("Wave");
   useEffect(() => {
     initStadiAnimations(actions);

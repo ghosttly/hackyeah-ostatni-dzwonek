@@ -12,13 +12,28 @@ export const Chat = () => {
   const [showBubble, setShowBubble] = useState(false);
   const { messages, input, handleInputChange, handleSubmit, isLoading } =
     useChat({
-      onFinish: () => handleStreamfinish(),
+      onFinish: () => handleMsgContainerScroll(),
       onResponse: () => handleMsgContainerScroll(),
-    });
+      experimental_onFunctionCall: async (data, rest) => {
+        console.log(data, rest);
+        const _messages = data.map((message) => {
+          let _message: string;
+          try {
+            const data = JSON.parse(message.content);
+            console.log(data);
+            _message = data.content;
+          } catch (e) {
+            _message = message.content;
+          }
+          return {
+            ...message,
+            content: _message,
+          };
+        });
 
-  const handleStreamfinish = () => {
-    handleMsgContainerScroll();
-  };
+        return { messages: _messages };
+      },
+    });
 
   const handleMsgContainerScroll = () => {
     if (msgContainerRef.current)
@@ -86,7 +101,7 @@ export const Chat = () => {
                 />
               ))}
             </div>
-            <div className=" h-[5.8rem] p-[0.6rem] flex gap-[0.8rem]">
+            <div className="h-[5.8rem] p-[0.6rem] flex gap-[0.8rem]">
               <form
                 onSubmit={(e) => {
                   handleSubmit(e), handleMsgContainerScroll();

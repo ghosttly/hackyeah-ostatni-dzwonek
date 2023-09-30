@@ -17,6 +17,23 @@ export type StadiActions =
   | "Wave"
   | "Yes";
 
+export const ArrayOfStadiActions: StadiActions[] = [
+  "Dance",
+  "Death",
+  "Idle",
+  "Jump",
+  "No",
+  "Punch",
+  "Running",
+  "Sitting",
+  "Standing",
+  "ThumbsUp",
+  "WalkJump",
+  "Walking",
+  "Wave",
+  "Yes",
+];
+
 type StadiStore = {
   stadiActions: {
     [key: string]: AnimationAction;
