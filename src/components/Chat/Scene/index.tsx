@@ -20,16 +20,10 @@ export const Scene = () => {
 const Model = () => {
   const { scene, animations } = useGLTF("/typo.glb");
   const { actions } = useAnimations(animations, scene);
-
   useEffect(() => {
-    // actions["Idle"]?.play();
-    // scene.traverse(
-    //   (obj) =>
-    //     "isMesh" in obj &&
-    //     obj.isMesh &&
-    //     (obj.receiveShadow = obj.castShadow = true)
-    // );
-  }, [actions, scene]);
+    console.log(actions);
+    // actions["Death"]?.reset().play();
+  }, []);
 
-  return <primitive object={scene} scale={[0.02, 0.02, 0.02]}></primitive>;
+  return <primitive object={scene}></primitive>;
 };
