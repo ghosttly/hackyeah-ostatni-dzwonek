@@ -29,7 +29,7 @@ export const Chat = () => {
   };
 
   useEffect(() => {
-    if (showBubble) setTimeout(() => setShowBubble(false), 1500);
+    if (showBubble) setTimeout(() => setShowBubble(false), 2000);
   }, [showBubble]);
 
   const msgContainerRef = useRef<HTMLDivElement | null>(null);
