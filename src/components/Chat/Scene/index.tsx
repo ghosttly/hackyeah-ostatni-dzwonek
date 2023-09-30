@@ -4,8 +4,7 @@ import React, { Suspense, useEffect } from "react";
 import { Stage, useAnimations, useGLTF } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { useStadiStore } from "@/src/store/useStadiAnimations";
-
-useGLTF.preload("/typo_mozefixed2.glb");
+useGLTF.preload("/typo_bez_ronk.glb");
 
 export const Scene = () => {
   return (
@@ -27,13 +26,13 @@ const Model = () => {
       playAction: state.playAction,
     })
   );
-  const { scene, animations } = useGLTF("/typo_mozefixed2.glb");
+  const { scene, animations } = useGLTF("/typo_bez_ronk.glb");
   const { actions } = useAnimations(animations, scene);
-
-  console.log(stadiActions);
+  console.log(actions);
+  playAction("Wave");
   useEffect(() => {
     initStadiAnimations(actions);
   }, []);
 
-  return <primitive object={scene}></primitive>;
+  return <primitive object={scene} scale={[0.05, 0.05, 0.05]}></primitive>;
 };
