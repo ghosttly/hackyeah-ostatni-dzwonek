@@ -10,7 +10,7 @@ export const Chat = () => {
   return (
     <>
       <div className="absolute top-0 text-black left-0 z-10 w-full h-full lg:relative lg:w-1/2 p-1  ">
-        <div className="h-full p-4 rounded-lg  flex flex-col">
+        <div className="h-full p-10 rounded-lg  flex flex-col">
           <div className=" p-2 grow w-full overflow-y-auto border-solid border-2 scrollbar scrollbar-track-transparent scrollbar-thumb-main-blue-b scrollbar-rounded-md border-main-blue-b rounded-lg bg-[#FFFFFF80] ">
             {messages.map((message) => (
               <Message

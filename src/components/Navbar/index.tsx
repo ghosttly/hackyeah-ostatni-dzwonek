@@ -1,13 +1,19 @@
+"use client";
+
 import { languages } from "@/src/app/i18n/settings";
 import Link from "next/link";
 
 import React, { FC } from "react";
 import { PL } from "../assets/flags/PL";
 import { US } from "../assets/flags/US";
+import { usePathname, useSearchParams } from "next/navigation";
+import { useRouter } from "next/router";
 
 export const Navbar: FC<{ lng: string }> = ({ lng }) => {
+  const pathname = usePathname().slice(4);
+
   return (
-    <div className="p-2 px-5 w-full absolute top-0 left-0 ">
+    <div className="p-2 px-5 w-full absolute top-0 left-0 z-[100] ">
       <div className="ml-auto w-max">
         {languages
           .filter((l) => lng !== l)
@@ -16,7 +22,7 @@ export const Navbar: FC<{ lng: string }> = ({ lng }) => {
               <span key={l}>
                 <Link
                   className="flex text-[1.6rem] items-center justify-center gap-2 text-black font-semibold"
-                  href={`/${l}`}
+                  href={`/${l}${pathname === "/" ? "" : "/" + pathname}`}
                 >
                   {l === "en" ? (
                     <div className="w-6 h-6 flex">

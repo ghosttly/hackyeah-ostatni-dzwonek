@@ -4,6 +4,7 @@ import { Inter, VT323, Blinker } from "next/font/google";
 import { dir } from "i18next";
 
 import { Background } from "@/src/components/background";
+import { Navbar } from "@/src/components/Navbar";
 
 const languages = ["pl", "en"];
 
@@ -26,10 +27,13 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
   params: { lng },
+  searchParams,
 }: {
   children: React.ReactNode;
   params: { lng: string };
+  searchParams: URLSearchParams;
 }) {
+  console.log(searchParams);
   return (
     <html
       lang={lng}
@@ -37,6 +41,7 @@ export default function RootLayout({
       className={`${vt323.variable} ${blinker.variable}`}
     >
       <body className={inter.className}>
+        <Navbar lng={lng} />
         <Background />
 
         {children}
