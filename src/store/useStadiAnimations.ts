@@ -18,6 +18,7 @@ export type StadiActions =
   | "Yes";
 
 type StadiStore = {
+  conversationId?: string;
   stadiActions: {
     [key: string]: AnimationAction;
   };
@@ -26,6 +27,7 @@ type StadiStore = {
   }) => void;
   playAction: (actionName: StadiActions) => void;
   stopAction: (actionName: StadiActions) => void;
+  setConversationId: (conversationId: string) => void;
 };
 
 export const useStadiStore = create<StadiStore>()((set, get) => {
@@ -50,11 +52,15 @@ export const useStadiStore = create<StadiStore>()((set, get) => {
     const action = stadiActions[actionName];
     if (action) action.stop();
   };
-
+  const setConversationId = (conversationId: string) => {
+    set(() => ({ conversationId }));
+  };
   return {
     stadiActions: {},
     initStadiAnimations,
     playAction,
     stopAction,
+    setConversationId,
+    conversationId: undefined,
   };
 });
