@@ -9,6 +9,17 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Hearth } from "../assets/icons/Hearth";
 import { useBackend } from "@/src/app/api/chat/useBackend";
+import { Message as MessageType } from "ai";
+
+const askAssistant = async (message: MessageType) => {
+  const response = await fetch("/api/assistant", {
+    method: "POST",
+    body: JSON.stringify({ message }),
+  });
+  const data = await response.json();
+  return data;
+};
+
 import Link from "next/link";
 import { useStadiStore } from "@/src/store/useStadiAnimations";
 export const Chat = () => {
@@ -43,8 +54,10 @@ export const Chat = () => {
       const res = await getSuggestedUnis();
       if (!!res) setSuggestedUnis(res);
     },
+    onError: () => setIsLoading(false),
     onResponse: () => {
       handleMsgContainerScroll();
+      setIsLoading(false);
     },
   });
 
@@ -159,8 +172,19 @@ export const Chat = () => {
             </div>
             <div className=" h-[5.8rem] p-[0.6rem] flex gap-[1.6rem] pr-[2rem]">
               <form
-                onSubmit={(e) => {
+                onSubmit={async (e) => {
                   handleSubmit(e);
+                  if (messages.length >= 2) {
+                    const data = await askAssistant(
+                      messages[messages.length - 1]
+                    );
+                    try {
+                      const parsed = JSON.parse(data);
+                      if ("statement" in parsed) {
+                        console.log(parsed.statement);
+                      }
+                    } catch {}
+                  }
                   handleMsgContainerScroll();
                   setIsLoading(true);
                   triggerFintTunning();
