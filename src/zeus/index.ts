@@ -830,9 +830,14 @@ export type ScalarCoders = {
 type ZEUS_UNIONS = never
 
 export type ValueTypes = {
-    ["Query"]: AliasType<{
-	listJobs?:ValueTypes["Job"],
-suggestionUnivesties?: [{	contextId: string | Variable<any, string>},ValueTypes["Path"]],
+    ["DialogueInput"]: {
+	role: ValueTypes["DialogueRole"] | Variable<any, string>,
+	payload: string | Variable<any, string>
+};
+	["University"]: AliasType<{
+	name?:boolean | `@${string}`,
+	paths?:ValueTypes["Path"],
+	website?:boolean | `@${string}`,
 		__typename?: boolean | `@${string}`
 }>;
 	["Job"]: AliasType<{
@@ -845,7 +850,7 @@ suggestionUnivesties?: [{	contextId: string | Variable<any, string>},ValueTypes[
 		__typename?: boolean | `@${string}`
 }>;
 	["Mutation"]: AliasType<{
-createBotDialogue?: [{	dialogueId?: string | undefined | null | Variable<any, string>,	userPayload: ValueTypes["DialogueInput"] | Variable<any, string>,	botPayload: ValueTypes["DialogueInput"] | Variable<any, string>},boolean | `@${string}`],
+createBotDialogue?: [{	userPayload: ValueTypes["DialogueInput"] | Variable<any, string>,	botPayload: ValueTypes["DialogueInput"] | Variable<any, string>,	dialogueId?: string | undefined | null | Variable<any, string>},boolean | `@${string}`],
 reactOnConversation?: [{	conversationId: string | Variable<any, string>,	reaction: boolean | Variable<any, string>},boolean | `@${string}`],
 	testEndpoint?:boolean | `@${string}`,
 	useFineTuneJob?:boolean | `@${string}`,
@@ -858,23 +863,23 @@ reactOnConversation?: [{	conversationId: string | Variable<any, string>,	reactio
 	university?:ValueTypes["University"],
 		__typename?: boolean | `@${string}`
 }>;
-	["University"]: AliasType<{
-	name?:boolean | `@${string}`,
-	paths?:ValueTypes["Path"],
-	website?:boolean | `@${string}`,
-		__typename?: boolean | `@${string}`
-}>;
 	["DialogueRole"]:DialogueRole;
-	["DialogueInput"]: {
-	payload: string | Variable<any, string>,
-	role: ValueTypes["DialogueRole"] | Variable<any, string>
-}
+	["Query"]: AliasType<{
+	listJobs?:ValueTypes["Job"],
+suggestionUnivesties?: [{	contextId: string | Variable<any, string>},ValueTypes["Path"]],
+		__typename?: boolean | `@${string}`
+}>
   }
 
 export type ResolverInputTypes = {
-    ["Query"]: AliasType<{
-	listJobs?:ResolverInputTypes["Job"],
-suggestionUnivesties?: [{	contextId: string},ResolverInputTypes["Path"]],
+    ["DialogueInput"]: {
+	role: ResolverInputTypes["DialogueRole"],
+	payload: string
+};
+	["University"]: AliasType<{
+	name?:boolean | `@${string}`,
+	paths?:ResolverInputTypes["Path"],
+	website?:boolean | `@${string}`,
 		__typename?: boolean | `@${string}`
 }>;
 	["Job"]: AliasType<{
@@ -887,7 +892,7 @@ suggestionUnivesties?: [{	contextId: string},ResolverInputTypes["Path"]],
 		__typename?: boolean | `@${string}`
 }>;
 	["Mutation"]: AliasType<{
-createBotDialogue?: [{	dialogueId?: string | undefined | null,	userPayload: ResolverInputTypes["DialogueInput"],	botPayload: ResolverInputTypes["DialogueInput"]},boolean | `@${string}`],
+createBotDialogue?: [{	userPayload: ResolverInputTypes["DialogueInput"],	botPayload: ResolverInputTypes["DialogueInput"],	dialogueId?: string | undefined | null},boolean | `@${string}`],
 reactOnConversation?: [{	conversationId: string,	reaction: boolean},boolean | `@${string}`],
 	testEndpoint?:boolean | `@${string}`,
 	useFineTuneJob?:boolean | `@${string}`,
@@ -900,17 +905,12 @@ reactOnConversation?: [{	conversationId: string,	reaction: boolean},boolean | `@
 	university?:ResolverInputTypes["University"],
 		__typename?: boolean | `@${string}`
 }>;
-	["University"]: AliasType<{
-	name?:boolean | `@${string}`,
-	paths?:ResolverInputTypes["Path"],
-	website?:boolean | `@${string}`,
+	["DialogueRole"]:DialogueRole;
+	["Query"]: AliasType<{
+	listJobs?:ResolverInputTypes["Job"],
+suggestionUnivesties?: [{	contextId: string},ResolverInputTypes["Path"]],
 		__typename?: boolean | `@${string}`
 }>;
-	["DialogueRole"]:DialogueRole;
-	["DialogueInput"]: {
-	payload: string,
-	role: ResolverInputTypes["DialogueRole"]
-};
 	["schema"]: AliasType<{
 	query?:ResolverInputTypes["Query"],
 	mutation?:ResolverInputTypes["Mutation"],
@@ -919,9 +919,14 @@ reactOnConversation?: [{	conversationId: string,	reaction: boolean},boolean | `@
   }
 
 export type ModelTypes = {
-    ["Query"]: {
-		listJobs: ModelTypes["Job"],
-	suggestionUnivesties?: Array<ModelTypes["Path"]> | undefined
+    ["DialogueInput"]: {
+	role: ModelTypes["DialogueRole"],
+	payload: string
+};
+	["University"]: {
+		name: string,
+	paths: Array<ModelTypes["Path"]>,
+	website: string
 };
 	["Job"]: {
 		_id: string,
@@ -943,15 +948,10 @@ export type ModelTypes = {
 	tags: Array<string>,
 	university: ModelTypes["University"]
 };
-	["University"]: {
-		name: string,
-	paths: Array<ModelTypes["Path"]>,
-	website: string
-};
 	["DialogueRole"]:DialogueRole;
-	["DialogueInput"]: {
-	payload: string,
-	role: ModelTypes["DialogueRole"]
+	["Query"]: {
+		listJobs: ModelTypes["Job"],
+	suggestionUnivesties?: Array<ModelTypes["Path"]> | undefined
 };
 	["schema"]: {
 	query?: ModelTypes["Query"] | undefined,
@@ -960,10 +960,15 @@ export type ModelTypes = {
     }
 
 export type GraphQLTypes = {
-    ["Query"]: {
-	__typename: "Query",
-	listJobs: GraphQLTypes["Job"],
-	suggestionUnivesties?: Array<GraphQLTypes["Path"]> | undefined
+    ["DialogueInput"]: {
+		role: GraphQLTypes["DialogueRole"],
+	payload: string
+};
+	["University"]: {
+	__typename: "University",
+	name: string,
+	paths: Array<GraphQLTypes["Path"]>,
+	website: string
 };
 	["Job"]: {
 	__typename: "Job",
@@ -988,24 +993,19 @@ export type GraphQLTypes = {
 	tags: Array<string>,
 	university: GraphQLTypes["University"]
 };
-	["University"]: {
-	__typename: "University",
-	name: string,
-	paths: Array<GraphQLTypes["Path"]>,
-	website: string
-};
 	["DialogueRole"]: DialogueRole;
-	["DialogueInput"]: {
-		payload: string,
-	role: GraphQLTypes["DialogueRole"]
+	["Query"]: {
+	__typename: "Query",
+	listJobs: GraphQLTypes["Job"],
+	suggestionUnivesties?: Array<GraphQLTypes["Path"]> | undefined
 }
     }
 export const enum DialogueRole {
-	assistant = "assistant",
-	user = "user"
+	user = "user",
+	assistant = "assistant"
 }
 
 type ZEUS_VARIABLES = {
-	["DialogueRole"]: ValueTypes["DialogueRole"];
 	["DialogueInput"]: ValueTypes["DialogueInput"];
+	["DialogueRole"]: ValueTypes["DialogueRole"];
 }

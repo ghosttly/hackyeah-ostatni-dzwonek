@@ -29,15 +29,22 @@ const system = {
     `STATEMENT IN JSON RESPONSE CAN TAKE ONLY VALUES FROM THIS ARRAY ${JSON.stringify(
       ArrayOfStadiActions
     )}`,
-    `If this is first message in conversation, you should write in language with user talks something like that "Hello, I am Stadi. I am a chatbot that helps teenagers to choose their next major at Cracow colleges. You will be asked to answer questions about the majors and Cracow colleges."`,
+    `If this is first message in conversation, you should wrote back in language which user wrote to you. And you welcome message is u have to translate it if needed: "Hello, I am Stadi. I am a chatbot that helps teenagers to choose their next major at Cracow colleges. You will be asked to answer questions about the majors and Cracow colleges."`,
   ].join(" "),
 };
 
 export async function POST(req: Request) {
   const defaultModel = "ft:gpt-3.5-turbo-0613:personal::84PbQFCX";
-  const data = await chain("query")({
-    listJobs: { fineTuneModel: true },
-  });
+  let data;
+  try {
+    data = await chain("query")({
+      listJobs: { fineTuneModel: true },
+    });
+  } catch {
+    data = { listJobs: { fineTuneModel: undefined } };
+  }
+  console.log(`FT Model exists ${!!data.listJobs.fineTuneModel}`);
+
   const { messages } = (await req.json()) as { messages: Message[] };
 
   const response = await openai.chat.completions.create({
