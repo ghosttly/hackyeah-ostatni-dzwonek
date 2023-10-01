@@ -29,6 +29,7 @@ const system = {
     `STATEMENT IN JSON RESPONSE CAN TAKE ONLY VALUES FROM THIS ARRAY ${JSON.stringify(
       ArrayOfStadiActions
     )}`,
+    `If this is first message in conversation, you should write "role": "system" and "content": "Hello, I am Stadi. I am a chatbot that helps teenagers to choose their next major at Cracow colleges. You will be asked to answer questions about the majors and Cracow colleges."`,
   ].join(" "),
 };
 
@@ -40,21 +41,9 @@ export async function POST(req: Request) {
     model,
     stream: true,
     messages: [{ ...system }, ...messages],
-    // function_call: "auto",
-    // functions: [
-    //   {
-    //     name: "auto",
-    //     parameters: {
-    //       type: "object",
-    //       properties: {
-    //         content: {
-    //           type: "string",
-    //         },
-    //       },
-    //     },
-    //   },
-    // ],
+    temperature: 0,
   });
+
   const stream = OpenAIStream(response as any);
   return new StreamingTextResponse(stream);
 }

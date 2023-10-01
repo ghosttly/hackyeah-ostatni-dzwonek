@@ -12,30 +12,18 @@ import { useBackend } from "@/src/app/api/chat/useBackend";
 export const Chat = () => {
   const { praiseTheconverstaion } = useBackend();
   const [showBubble, setShowBubble] = useState(false);
-  const { messages, input, handleInputChange, handleSubmit, isLoading } =
-    useChat({
-      onFinish: () => handleMsgContainerScroll(),
-      onResponse: () => handleMsgContainerScroll(),
-      experimental_onFunctionCall: async (data, rest) => {
-        console.log(data, rest);
-        const _messages = data.map((message) => {
-          let _message: string;
-          try {
-            const data = JSON.parse(message.content);
-            console.log(data);
-            _message = data.content;
-          } catch (e) {
-            _message = message.content;
-          }
-          return {
-            ...message,
-            content: _message,
-          };
-        });
 
-        return { messages: _messages };
-      },
-    });
+  const [isLoading, setIsLoading] = useState(false);
+
+  const { messages, input, handleInputChange, handleSubmit } = useChat({
+    onFinish: () => {
+      handleMsgContainerScroll();
+      setIsLoading(false);
+    },
+    onResponse: () => {
+      handleMsgContainerScroll();
+    },
+  });
 
   const handleMsgContainerScroll = () => {
     if (msgContainerRef.current)
@@ -46,12 +34,20 @@ export const Chat = () => {
   };
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (!isLoading) {
+      inputRef.current?.focus();
+    }
+  }, [isLoading]);
+
+  useEffect(() => {
     if (showBubble) {
       setTimeout(() => setShowBubble(false), 2000);
     }
   }, [showBubble]);
 
   const msgContainerRef = useRef<HTMLDivElement | null>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
   const pathname = usePathname();
   return (
     <>
@@ -108,12 +104,15 @@ export const Chat = () => {
             <div className="h-[5.8rem] p-[0.6rem] flex gap-[0.8rem]">
               <form
                 onSubmit={(e) => {
-                  handleSubmit(e), handleMsgContainerScroll();
+                  handleSubmit(e);
+                  handleMsgContainerScroll();
+                  setIsLoading(true);
                 }}
                 className="h-full bg-white rounded-full p-[0.4rem] px-[1rem] flex grow "
               >
                 <input
                   disabled={isLoading}
+                  ref={inputRef}
                   value={input}
                   onChange={handleInputChange}
                   className="grow text-[1.6rem]"
