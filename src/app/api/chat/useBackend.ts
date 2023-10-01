@@ -1,7 +1,7 @@
 import { useStadiStore } from "@/src/store/useStadiAnimations";
 import { Chain, DialogueRole } from "@/src/zeus";
 
-const URL = "http://faker-api.dev.project.graphqleditor.com/graphql";
+const URL = "https://faker-api.dev.project.graphqleditor.com/graphql";
 const headers = {
   "Content-type": "application/json",
   Key: process.env.KEY || "",
@@ -47,7 +47,10 @@ export const useBackend = () => {
 
   const getfineTuneConversations = async () => {
     try {
-      await chain("query")({ listJobs: {} });
+      const res = await chain("query")({
+        listJobs: { conversationCountWhenCreated: true },
+      });
+      return res;
     } catch {}
   };
 
@@ -56,5 +59,6 @@ export const useBackend = () => {
     praiseTheconverstaion,
     getSuggestedTags,
     startFineTuning,
+    getfineTuneConversations,
   };
 };
