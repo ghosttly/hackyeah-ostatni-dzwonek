@@ -1,6 +1,6 @@
 import { Chain, DialogueRole } from "@/src/zeus";
 
-const URL = "http://25.57.229.254:8080/graphql";
+const URL = "http://faker-api.dev.project.graphqleditor.com/graphql";
 const headers = {
   "Content-type": "application/json",
   Key: process.env.KEY || "",
@@ -12,7 +12,11 @@ export const useBackend = () => {
   const createDialogue = async (dialogueId?: string) =>
     await chain("query")({
       createBotDialogue: [
-        { payload: { payload: "", role: DialogueRole.user }, dialogueId },
+        {
+          botPayload: { payload: "", role: DialogueRole.assistant },
+          dialogueId,
+          userPayload: { payload: "", role: DialogueRole.user },
+        },
         true,
       ],
     });
@@ -20,6 +24,19 @@ export const useBackend = () => {
     await chain("mutation")({
       reactOnConversation: [{ conversationId }, true],
     });
+  const getSuggestedTags = async (contextId: string) =>
+    await chain("query")({
+      listUnis: { name: true, paths: { _id: true, name: true, tags: true } },
+    });
 
-  return { createDialogue, praiseTheconverstaion };
+  const startFineTuning = async () => {
+    await chain("query")({ useFineTuneJob: true });
+  };
+
+  return {
+    createDialogue,
+    praiseTheconverstaion,
+    getSuggestedTags,
+    startFineTuning,
+  };
 };

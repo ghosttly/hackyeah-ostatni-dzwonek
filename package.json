@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "zeus": "zeus http://25.57.229.254:8080/graphql ./src --ts"
+    "zeus": "zeus http://faker-api.dev.project.graphqleditor.com/graphql ./src --ts"
   },
   "dependencies": {
     "@nanostores/react": "github:ai/react",

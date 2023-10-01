@@ -9,6 +9,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Hearth } from "../assets/icons/Hearth";
 import { useBackend } from "@/src/app/api/chat/useBackend";
+import Link from "next/link";
 export const Chat = () => {
   const { praiseTheconverstaion } = useBackend();
   const [showBubble, setShowBubble] = useState(false);
@@ -38,16 +39,20 @@ export const Chat = () => {
 
   const msgContainerRef = useRef<HTMLDivElement | null>(null);
   const pathname = usePathname();
+  const language = pathname.slice(0, 3);
+  console.log(language);
   return (
     <>
       <div className="absolute top-0 text-black left-0 z-10 h-screen w-full flex flex-col  lg:relative lg:w-3/4 p-[0.2rem] xl:w-1/2 ">
-        <Image
-          className="ml-[1.4rem] my-[1.4rem]"
-          width={201}
-          height={91}
-          alt="ostatni dzwonek logo"
-          src="/images/logo.png"
-        />
+        <Link href={language}>
+          <Image
+            className="ml-[1.4rem] my-[1.4rem]"
+            width={201}
+            height={91}
+            alt="ostatni dzwonek logo"
+            src="/images/logo.png"
+          />
+        </Link>
         <div className="flex flex-col md:flex-row gap-[1.6rem] mx-[1.4rem] lg:mr-0 mb-[5rem]">
           <div className="bg-[#FFFFFF80]  w-full md:w-[300px] shrink-0 flex md:flex-col h-[10rem] md:h-full">
             <div className="md:h-[7.2rem] bg-main-blue-d flex items-center">
@@ -72,8 +77,8 @@ export const Chat = () => {
             <div className="h-[7.2rem] bg-main-blue-d flex items-center pl-[1.4rem]">
               <Image
                 src={"/images/stradi.png"}
-                width={56}
-                height={56}
+                width={60}
+                height={60}
                 alt="stradi bot"
               />
               <h3 className=" text-[3.2rem] pl-[1.4rem] font-v323 ">Stadi</h3>
@@ -90,7 +95,7 @@ export const Chat = () => {
                 />
               ))}
             </div>
-            <div className=" h-[5.8rem] p-[0.6rem] flex gap-[0.8rem]">
+            <div className=" h-[5.8rem] p-[0.6rem] flex gap-[1.6rem] pr-[2rem]">
               <form
                 onSubmit={(e) => {
                   handleSubmit(e), handleMsgContainerScroll();
@@ -98,6 +103,7 @@ export const Chat = () => {
                 className="h-full bg-white rounded-full p-[0.4rem] px-[1rem] flex grow "
               >
                 <input
+                  placeholder="Co chcesz wiedzieć? :)"
                   disabled={isLoading}
                   value={input}
                   onChange={handleInputChange}

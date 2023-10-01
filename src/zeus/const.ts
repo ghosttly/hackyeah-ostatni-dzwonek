@@ -1,9 +1,7 @@
 /* eslint-disable */
 
 export const AllTypesProps: Record<string,any> = {
-	BotDialogueInput:{
-		role:"DialogueRole"
-	},
+	DialogueRole: "enum" as const,
 	Query:{
 		getUniByTags:{
 
@@ -11,20 +9,22 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	Mutation:{
 		createBotDialogue:{
-			payload:"BotDialogueInput"
+			userPayload:"DialogueInput",
+			botPayload:"DialogueInput"
 		},
 		reactOnConversation:{
 
 		}
 	},
-	DialogueRole: "enum" as const
+	DialogueInput:{
+		role:"DialogueRole"
+	}
 }
 
 export const ReturnTypes: Record<string,any> = {
-	Path:{
-		_id:"String",
+	University:{
 		name:"String",
-		tags:"String"
+		paths:"Path"
 	},
 	Job:{
 		_id:"String",
@@ -33,14 +33,16 @@ export const ReturnTypes: Record<string,any> = {
 		file:"String",
 		tuneId:"String"
 	},
-	University:{
-		name:"String",
-		paths:"Path"
-	},
 	Query:{
 		getUniByTags:"Path",
 		listJobs:"Job",
 		listUnis:"University"
+	},
+	Path:{
+		_id:"String",
+		name:"String",
+		tags:"String",
+		university:"University"
 	},
 	Mutation:{
 		createBotDialogue:"String",

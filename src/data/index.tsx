@@ -1,4 +1,6 @@
-import { GithubLogo } from "../components/assets/icons/GithubLogo";
+import { FigmaLogo } from "@/src/components/assets/icons/FigmaLogo";
+import { GithubLogo } from "@/src/components/assets/icons/GithubLogo";
+import { Bell } from "../components/assets/icons/Bell";
 export const overwievLinks = [
   {
     icon: <GithubLogo />,
@@ -11,12 +13,12 @@ export const overwievLinks = [
     href: "https://github.com/ghosttly/hackyeah-ostatni-dzwonek",
   },
   {
-    icon: <GithubLogo />,
+    icon: <FigmaLogo />,
     title: "Figma",
     href: "https://www.figma.com/file/oIceVt7mOtkLN5igLo1mnC/Untitled?type=design&node-id=0%3A1&mode=design&t=e56OvuyYLhfSgEN4-1",
   },
   {
-    icon: <GithubLogo />,
+    icon: <Bell />,
     title: "Aplikacja",
     href: "https://hackyeah-ostatni-dzwonek.vercel.app",
   },
