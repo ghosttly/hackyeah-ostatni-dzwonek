@@ -37,7 +37,13 @@ export const Chat = () => {
   const [showBubble, setShowBubble] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [suggestedUnis, setSuggestedUnis] = useState<
-    { name?: string }[] | undefined
+    | {
+        university: {
+          name: string;
+          website: string;
+        };
+      }[]
+    | undefined
   >([]);
 
   const { messages, input, handleInputChange, handleSubmit } = useChat({
@@ -137,13 +143,12 @@ export const Chat = () => {
             </div>
             <div className="md:h-[calc(100vh-91px-6.4rem-5rem)]  custom-scrollbar overflow-x-scroll md:overflow-y-scroll md:overflow-x-auto flex md:flex-col gap-[1.4rem] p-[1.4rem]">
               {!!suggestedUnis?.length ? (
-                suggestedUnis.map(({ name }) => (
-                  <p
-                    className="text-[1.6rem] bg-white text-center shrink-0 max-w-[400px] p-[0.4rem] select-none cursor-pointer"
-                    key={name}
-                  >
-                    &#127979; {name}
-                  </p>
+                suggestedUnis.map(({ university: { name, website } }) => (
+                  <Link key={name} href={website}>
+                    <p className="text-[1.6rem] bg-white text-center shrink-0 max-w-[400px] p-[0.4rem] select-none cursor-pointer">
+                      &#127979; {name}
+                    </p>
+                  </Link>
                 ))
               ) : language.includes("pl") ? (
                 <p className="text-[1.6rem] bg-white text-center shrink-0 max-w-[400px] p-[0.4rem] tracking-tighter select-none ">

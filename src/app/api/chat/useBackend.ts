@@ -39,7 +39,7 @@ export const useBackend = () => {
         suggestionUnivesties: [
           { contextId: conversationId },
           {
-            name: true,
+            university: { website: true, name: true },
           },
         ],
       });

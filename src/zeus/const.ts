@@ -1,14 +1,13 @@
 /* eslint-disable */
 
 export const AllTypesProps: Record<string,any> = {
-	DialogueRole: "enum" as const,
-	DialogueInput:{
-		role:"DialogueRole"
-	},
 	Query:{
 		suggestionUnivesties:{
 
 		}
+	},
+	DialogueInput:{
+		role:"DialogueRole"
 	},
 	Mutation:{
 		createBotDialogue:{
@@ -18,22 +17,11 @@ export const AllTypesProps: Record<string,any> = {
 		reactOnConversation:{
 
 		}
-	}
+	},
+	DialogueRole: "enum" as const
 }
 
 export const ReturnTypes: Record<string,any> = {
-	Job:{
-		_id:"String",
-		conversationCountWhenCreated:"Int",
-		createdAt:"String",
-		file:"String",
-		tuneId:"String"
-	},
-	University:{
-		name:"String",
-		paths:"Path",
-		website:"String"
-	},
 	Query:{
 		listJobs:"Job",
 		suggestionUnivesties:"Path"
@@ -44,11 +32,23 @@ export const ReturnTypes: Record<string,any> = {
 		tags:"String",
 		university:"University"
 	},
+	University:{
+		name:"String",
+		paths:"Path",
+		website:"String"
+	},
 	Mutation:{
 		createBotDialogue:"String",
 		reactOnConversation:"Boolean",
 		testEndpoint:"Boolean",
 		useFineTuneJob:"Boolean"
+	},
+	Job:{
+		_id:"String",
+		conversationCountWhenCreated:"Int",
+		createdAt:"String",
+		file:"String",
+		tuneId:"String"
 	}
 }
 
