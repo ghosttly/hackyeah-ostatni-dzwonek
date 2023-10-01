@@ -41,6 +41,9 @@ export default async function Home({
       >
         {t("ctaBtn")}
       </Link>
+      <div className="absolute bottom-0 right-0 w-[593px] h-[593px] -z-50">
+        <Image alt="bot portret" src={"/images/portret.png"} fill />
+      </div>
     </main>
   );
 }
