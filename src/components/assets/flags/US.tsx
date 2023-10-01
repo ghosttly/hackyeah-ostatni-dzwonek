@@ -8,7 +8,7 @@ export const US = () => {
           <path fill-opacity=".67" d="M0 0h682.67v512H0z" />
         </clipPath>
       </defs>
-      <g fill-rule="evenodd" clip-path="url(#a)" transform="scale(.9375)">
+      <g fillRule="evenodd" clip-path="url(#a)" transform="scale(.9375)">
         <g stroke-width="1pt">
           <path
             d="M0 0h972.81v39.385H0zm0 78.77h972.81v39.385H0zm0 78.77h972.81v39.385H0zm0 78.77h972.81v39.385H0zm0 78.77h972.81v39.385H0zm0 78.77h972.81v39.385H0zm0 78.77h972.81v39.385H0z"

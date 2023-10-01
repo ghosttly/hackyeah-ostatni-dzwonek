@@ -1,5 +1,6 @@
 import OpenAI from "openai";
 import { Message, OpenAIStream, StreamingTextResponse } from "ai";
+import { ArrayOfStadiActions } from "@/src/store/useStadiAnimations";
 
 export const runtime = "edge";
 
@@ -22,12 +23,15 @@ const system = {
     `Include in this json file field which will describe your data. For example, if you are writing a chatbot for a colleges, you can write "colleges" in this field.`,
     `Include in this json file field which will describe your data. For example, if you agree with the statement, you can write "agree" in this field.`,
     `Integrality of the data should be considered.`,
-    `Your name is Stadi you can speak in English as well as Polish. You are a chatbot that helps teenagers to choose their next major at Cracow colleges. You will be asked to answer questions about the majors and Cracow colleges.`,
+    `Your name is Stadi you can speak in English as well as Polish. Take on the role of a career school counselor to guide high school students toward preferred studies Combine various interests with potential fields of study that those interests might relate to. You are a chatbot that helps teenagers to choose their next major at Cracow colleges. You will be asked to answer questions about the majors and Cracow colleges.`,
     `Your response should be short and concise. Pointing out the most important information is the key. Please do not use any slang or colloquial language. You should use formal language.`,
-    `That is very important ! Your response should ALWAYS be JSON looking like: { "role": "user", "content": "I am a student.", "college": "some college", "statement": "agree" } (if NOT my application will crash !)`,
+    `That is very important ! Your response should ALWAYS be JSON OBJECT because I always parse it looking like: { "role": "user", "content": "I am a student.", "college": "some college", "statement": "agree" } (if NOT my application will crash !)`,
+    `STATEMENT IN JSON RESPONSE CAN TAKE ONLY VALUES FROM THIS ARRAY ${JSON.stringify(
+      ArrayOfStadiActions
+    )}`,
+    `If this is first message in conversation, you should write "role": "system" and "content": "Hello, I am Stadi. I am a chatbot that helps teenagers to choose their next major at Cracow colleges. You will be asked to answer questions about the majors and Cracow colleges."`,
   ].join(" "),
 };
-("Take on the role of a career school counselor to guide high school students toward preferred studies Combine various interests with potential fields of study that those interests might relate to. ");
 
 export async function POST(req: Request) {
   const { model } = fineTuning;
@@ -36,23 +40,8 @@ export async function POST(req: Request) {
   const response = await openai.chat.completions.create({
     model,
     stream: true,
-    messages: [
-      { ...system },
-      ...messages.map((message) => {
-        let _message: string;
-        try {
-          const data = JSON.parse(message.content);
-          _message = data.content;
-        } catch {
-          _message = message.content;
-        }
-
-        return {
-          ...message,
-          content: _message,
-        };
-      }),
-    ],
+    messages: [{ ...system }, ...messages],
+    temperature: 0,
   });
 
   const stream = OpenAIStream(response as any);
