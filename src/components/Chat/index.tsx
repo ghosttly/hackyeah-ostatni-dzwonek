@@ -148,9 +148,16 @@ export const Chat = () => {
             <div className="md:h-[calc(100vh-91px-6.4rem-5rem-4rem)]  custom-scrollbar overflow-x-scroll md:overflow-y-scroll md:overflow-x-auto flex md:flex-col gap-[1.4rem] p-[1.4rem]">
               {!!suggestedUnis?.length ? (
                 suggestedUnis.map(({ university: { name, website } }) => (
-                  <Link key={name} href={website}>
+                  <Link
+                    key={name}
+                    href={website}
+                    onClick={() => {
+                      if (!conversationId) return;
+                      praiseTheConverstaion(conversationId);
+                    }}
+                  >
                     <p className="text-[1.6rem] bg-white text-center shrink-0 max-w-[400px] p-[0.4rem] select-none cursor-pointer">
-                      &#127979; {name}
+                      &#127979; <br /> {name}
                     </p>
                   </Link>
                 ))
