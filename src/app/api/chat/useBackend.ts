@@ -9,14 +9,18 @@ const headers = {
 const chain = (option: "query" | "mutation") => Chain(URL, { headers })(option);
 
 export const useBackend = () => {
-  const createDialogue = async (dialogueId?: string) => {
+  const createDialogue = async (
+    userPayload: string,
+    botPayload: string,
+    dialogueId?: string
+  ) => {
     try {
       const res = await chain("query")({
         createBotDialogue: [
           {
-            botPayload: { payload: "", role: DialogueRole.assistant },
+            botPayload: { payload: botPayload, role: DialogueRole.assistant },
             dialogueId,
-            userPayload: { payload: "", role: DialogueRole.user },
+            userPayload: { payload: userPayload, role: DialogueRole.user },
           },
           true,
         ],

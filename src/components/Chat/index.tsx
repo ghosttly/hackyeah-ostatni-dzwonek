@@ -40,19 +40,24 @@ export const Chat = () => {
   >([]);
 
   useEffect(() => {
-    (async () => {
-      const res = await createDialogue();
-      if (res) setConversationId(res);
-      console.log(res);
-    })();
+    (async () => {})();
   }, []);
 
   const { messages, input, handleInputChange, handleSubmit } = useChat({
-    onFinish: async () => {
+    onFinish: async (d) => {
       handleMsgContainerScroll();
       setIsLoading(false);
-      const res = await getSuggestedUnis();
-      if (!!res) setSuggestedUnis(res);
+      console.log(d);
+      console.log("dupa");
+      const sugesteddUnis = await getSuggestedUnis();
+      if (!!sugesteddUnis) setSuggestedUnis(sugesteddUnis);
+      const res = await createDialogue(
+        messages[messages.length - 1].content,
+        d.content,
+        conversationId
+      );
+      if (res) setConversationId(res);
+      console.log(res);
     },
     onError: () => setIsLoading(false),
     onResponse: () => {
@@ -85,7 +90,7 @@ export const Chat = () => {
       }
       setTimeout(() => setShowBubble(false), 2000);
     }
-  }, [showBubble, conversationId, praiseTheconverstaion]);
+  }, [showBubble, conversationId, praiseTheConverstaion]);
 
   const msgContainerRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -131,21 +136,9 @@ export const Chat = () => {
                 </p>
               ) : (
                 <p className="text-[1.6rem] bg-white text-center shrink-0 max-w-[400px] p-[0.4rem]">
-                  {" "}
                   There are no sugestted universities yet :(
                 </p>
               )}
-
-              {/* {Array(100)
-                .fill("Jakieś przykładowe pytania coś tam coś tam")
-                .map((t, i) => (
-                  <p
-                    className="text-[1.6rem] bg-white text-center shrink-0 max-w-[400px] p-[0.4rem]"
-                    key={i}
-                  >
-                    {t}
-                  </p>
-                ))} */}
             </div>
           </div>
           <div className="bg-[#FFFFFF80] grow">
