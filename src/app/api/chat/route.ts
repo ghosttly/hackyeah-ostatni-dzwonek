@@ -37,17 +37,17 @@ export async function POST(req: Request) {
   let data;
   try {
     data = await chain("query")({
-      listJobs: { fineTuneModel: true },
+      listJobs: true,
     });
   } catch {
-    data = { listJobs: { fineTuneModel: undefined } };
+    data = { listJobs: undefined };
   }
-  console.log(`FT Model exists ${!!data.listJobs.fineTuneModel}`);
+  console.log(`FT Model exists ${!!data.listJobs}`);
 
   const { messages } = (await req.json()) as { messages: Message[] };
 
   const response = await openai.chat.completions.create({
-    model: data.listJobs.fineTuneModel ?? defaultModel,
+    model: (data.listJobs as string) ?? defaultModel,
     stream: true,
     messages: [{ ...system }, ...messages],
     temperature: 0,
