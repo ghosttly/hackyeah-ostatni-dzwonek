@@ -1,14 +1,6 @@
 /* eslint-disable */
 
 export const AllTypesProps: Record<string,any> = {
-	Query:{
-		suggestionUnivesties:{
-
-		}
-	},
-	DialogueInput:{
-		role:"DialogueRole"
-	},
 	Mutation:{
 		createBotDialogue:{
 			userPayload:"DialogueInput",
@@ -18,10 +10,28 @@ export const AllTypesProps: Record<string,any> = {
 
 		}
 	},
-	DialogueRole: "enum" as const
+	DialogueRole: "enum" as const,
+	Query:{
+		suggestionUnivesties:{
+
+		}
+	},
+	DialogueInput:{
+		role:"DialogueRole"
+	}
 }
 
 export const ReturnTypes: Record<string,any> = {
+	University:{
+		name:"String",
+		paths:"Path"
+	},
+	Mutation:{
+		createBotDialogue:"String",
+		reactOnConversation:"Boolean",
+		testEndpoint:"Boolean",
+		useFineTuneJob:"Boolean"
+	},
 	Query:{
 		listJobs:"Job",
 		listUnis:"University",
@@ -39,16 +49,6 @@ export const ReturnTypes: Record<string,any> = {
 		name:"String",
 		tags:"String",
 		university:"University"
-	},
-	University:{
-		name:"String",
-		paths:"Path"
-	},
-	Mutation:{
-		createBotDialogue:"String",
-		reactOnConversation:"Boolean",
-		testEndpoint:"Boolean",
-		useFineTuneJob:"Boolean"
 	}
 }
 

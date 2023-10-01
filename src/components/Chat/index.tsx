@@ -43,8 +43,7 @@ export const Chat = () => {
     onFinish: async (d) => {
       handleMsgContainerScroll();
       setIsLoading(false);
-      console.log(d);
-      console.log("dupa");
+
       const sugesteddUnis = await getSuggestedUnis();
       if (!!sugesteddUnis) setSuggestedUnis(sugesteddUnis);
       const res = await createDialogue(
@@ -53,7 +52,6 @@ export const Chat = () => {
         conversationId
       );
       if (res) setConversationId(res);
-      console.log(res);
     },
     onError: () => setIsLoading(false),
     onResponse: () => {
@@ -92,7 +90,7 @@ export const Chat = () => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const pathname = usePathname();
   const language = pathname.slice(0, 3);
-  console.log(language);
+
   return (
     <>
       <div className="absolute top-0 text-black left-0 z-10 h-screen w-full flex flex-col  lg:relative lg:w-3/4 p-[0.2rem] xl:w-1/2 ">
@@ -120,19 +118,20 @@ export const Chat = () => {
               {!!suggestedUnis?.length ? (
                 suggestedUnis.map(({ name }) => (
                   <p
-                    className="text-[1.6rem] bg-white text-center shrink-0 max-w-[400px] p-[0.4rem]"
+                    className="text-[1.6rem] bg-white text-center shrink-0 max-w-[400px] p-[0.4rem] select-none cursor-pointer"
                     key={name}
                   >
-                    {name}
+                    &#127979; {name}
                   </p>
                 ))
               ) : language.includes("pl") ? (
-                <p className="text-[1.6rem] bg-white text-center shrink-0 max-w-[400px] p-[0.4rem]">
-                  Brak sugerowanych uczelni :(
+                <p className="text-[1.6rem] bg-white text-center shrink-0 max-w-[400px] p-[0.4rem] tracking-tighter select-none ">
+                  &#127979; Brak <br />
+                  sugerowanych uczelni :(
                 </p>
               ) : (
-                <p className="text-[1.6rem] bg-white text-center shrink-0 max-w-[400px] p-[0.4rem]">
-                  There are no sugestted universities yet :(
+                <p className="text-[1.6rem] bg-white text-center shrink-0 max-w-[400px] p-[0.4rem] tracking-tighter select-none">
+                  &#127979; There are <br /> no sugestted universities yet :(
                 </p>
               )}
             </div>
@@ -171,7 +170,6 @@ export const Chat = () => {
                     try {
                       const parsed = JSON.parse(data);
                       if ("statement" in parsed) {
-                        console.log(parsed.statement);
                       }
                     } catch {}
                   }

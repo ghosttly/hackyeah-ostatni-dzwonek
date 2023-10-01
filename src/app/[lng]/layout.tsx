@@ -33,7 +33,6 @@ export default function RootLayout({
   params: { lng: string };
   searchParams: URLSearchParams;
 }) {
-  console.log(searchParams);
   return (
     <html
       lang={lng}

@@ -830,7 +830,20 @@ export type ScalarCoders = {
 type ZEUS_UNIONS = never
 
 export type ValueTypes = {
-    ["Query"]: AliasType<{
+    ["University"]: AliasType<{
+	name?:boolean | `@${string}`,
+	paths?:ValueTypes["Path"],
+		__typename?: boolean | `@${string}`
+}>;
+	["Mutation"]: AliasType<{
+createBotDialogue?: [{	dialogueId?: string | undefined | null | Variable<any, string>,	userPayload: ValueTypes["DialogueInput"] | Variable<any, string>,	botPayload: ValueTypes["DialogueInput"] | Variable<any, string>},boolean | `@${string}`],
+reactOnConversation?: [{	conversationId: string | Variable<any, string>,	reaction: boolean | Variable<any, string>},boolean | `@${string}`],
+	testEndpoint?:boolean | `@${string}`,
+	useFineTuneJob?:boolean | `@${string}`,
+		__typename?: boolean | `@${string}`
+}>;
+	["DialogueRole"]:DialogueRole;
+	["Query"]: AliasType<{
 	listJobs?:ValueTypes["Job"],
 	listUnis?:ValueTypes["University"],
 suggestionUnivesties?: [{	contextId: string | Variable<any, string>},ValueTypes["Path"]],
@@ -854,24 +867,24 @@ suggestionUnivesties?: [{	contextId: string | Variable<any, string>},ValueTypes[
 	tags?:boolean | `@${string}`,
 	university?:ValueTypes["University"],
 		__typename?: boolean | `@${string}`
-}>;
-	["University"]: AliasType<{
+}>
+  }
+
+export type ResolverInputTypes = {
+    ["University"]: AliasType<{
 	name?:boolean | `@${string}`,
-	paths?:ValueTypes["Path"],
+	paths?:ResolverInputTypes["Path"],
 		__typename?: boolean | `@${string}`
 }>;
 	["Mutation"]: AliasType<{
-createBotDialogue?: [{	dialogueId?: string | undefined | null | Variable<any, string>,	userPayload: ValueTypes["DialogueInput"] | Variable<any, string>,	botPayload: ValueTypes["DialogueInput"] | Variable<any, string>},boolean | `@${string}`],
-reactOnConversation?: [{	conversationId: string | Variable<any, string>,	reaction: boolean | Variable<any, string>},boolean | `@${string}`],
+createBotDialogue?: [{	dialogueId?: string | undefined | null,	userPayload: ResolverInputTypes["DialogueInput"],	botPayload: ResolverInputTypes["DialogueInput"]},boolean | `@${string}`],
+reactOnConversation?: [{	conversationId: string,	reaction: boolean},boolean | `@${string}`],
 	testEndpoint?:boolean | `@${string}`,
 	useFineTuneJob?:boolean | `@${string}`,
 		__typename?: boolean | `@${string}`
 }>;
-	["DialogueRole"]:DialogueRole
-  }
-
-export type ResolverInputTypes = {
-    ["Query"]: AliasType<{
+	["DialogueRole"]:DialogueRole;
+	["Query"]: AliasType<{
 	listJobs?:ResolverInputTypes["Job"],
 	listUnis?:ResolverInputTypes["University"],
 suggestionUnivesties?: [{	contextId: string},ResolverInputTypes["Path"]],
@@ -896,19 +909,6 @@ suggestionUnivesties?: [{	contextId: string},ResolverInputTypes["Path"]],
 	university?:ResolverInputTypes["University"],
 		__typename?: boolean | `@${string}`
 }>;
-	["University"]: AliasType<{
-	name?:boolean | `@${string}`,
-	paths?:ResolverInputTypes["Path"],
-		__typename?: boolean | `@${string}`
-}>;
-	["Mutation"]: AliasType<{
-createBotDialogue?: [{	dialogueId?: string | undefined | null,	userPayload: ResolverInputTypes["DialogueInput"],	botPayload: ResolverInputTypes["DialogueInput"]},boolean | `@${string}`],
-reactOnConversation?: [{	conversationId: string,	reaction: boolean},boolean | `@${string}`],
-	testEndpoint?:boolean | `@${string}`,
-	useFineTuneJob?:boolean | `@${string}`,
-		__typename?: boolean | `@${string}`
-}>;
-	["DialogueRole"]:DialogueRole;
 	["schema"]: AliasType<{
 	query?:ResolverInputTypes["Query"],
 	mutation?:ResolverInputTypes["Mutation"],
@@ -917,7 +917,18 @@ reactOnConversation?: [{	conversationId: string,	reaction: boolean},boolean | `@
   }
 
 export type ModelTypes = {
-    ["Query"]: {
+    ["University"]: {
+		name: string,
+	paths: Array<ModelTypes["Path"]>
+};
+	["Mutation"]: {
+		createBotDialogue?: string | undefined,
+	reactOnConversation: boolean,
+	testEndpoint?: boolean | undefined,
+	useFineTuneJob: boolean
+};
+	["DialogueRole"]:DialogueRole;
+	["Query"]: {
 		listJobs: Array<ModelTypes["Job"]>,
 	listUnis: Array<ModelTypes["University"]>,
 	suggestionUnivesties?: Array<ModelTypes["Path"]> | undefined
@@ -939,17 +950,6 @@ export type ModelTypes = {
 	tags: Array<string>,
 	university: ModelTypes["University"]
 };
-	["University"]: {
-		name: string,
-	paths: Array<ModelTypes["Path"]>
-};
-	["Mutation"]: {
-		createBotDialogue?: string | undefined,
-	reactOnConversation: boolean,
-	testEndpoint?: boolean | undefined,
-	useFineTuneJob: boolean
-};
-	["DialogueRole"]:DialogueRole;
 	["schema"]: {
 	query?: ModelTypes["Query"] | undefined,
 	mutation?: ModelTypes["Mutation"] | undefined
@@ -957,7 +957,20 @@ export type ModelTypes = {
     }
 
 export type GraphQLTypes = {
-    ["Query"]: {
+    ["University"]: {
+	__typename: "University",
+	name: string,
+	paths: Array<GraphQLTypes["Path"]>
+};
+	["Mutation"]: {
+	__typename: "Mutation",
+	createBotDialogue?: string | undefined,
+	reactOnConversation: boolean,
+	testEndpoint?: boolean | undefined,
+	useFineTuneJob: boolean
+};
+	["DialogueRole"]: DialogueRole;
+	["Query"]: {
 	__typename: "Query",
 	listJobs: Array<GraphQLTypes["Job"]>,
 	listUnis: Array<GraphQLTypes["University"]>,
@@ -981,20 +994,7 @@ export type GraphQLTypes = {
 	name?: string | undefined,
 	tags: Array<string>,
 	university: GraphQLTypes["University"]
-};
-	["University"]: {
-	__typename: "University",
-	name: string,
-	paths: Array<GraphQLTypes["Path"]>
-};
-	["Mutation"]: {
-	__typename: "Mutation",
-	createBotDialogue?: string | undefined,
-	reactOnConversation: boolean,
-	testEndpoint?: boolean | undefined,
-	useFineTuneJob: boolean
-};
-	["DialogueRole"]: DialogueRole
+}
     }
 export const enum DialogueRole {
 	assistant = "assistant",
@@ -1002,6 +1002,6 @@ export const enum DialogueRole {
 }
 
 type ZEUS_VARIABLES = {
-	["DialogueInput"]: ValueTypes["DialogueInput"];
 	["DialogueRole"]: ValueTypes["DialogueRole"];
+	["DialogueInput"]: ValueTypes["DialogueInput"];
 }
