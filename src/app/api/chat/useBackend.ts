@@ -3,8 +3,6 @@ import { Chain, DialogueRole } from "@/src/zeus";
 const URL = "https://faker-api.dev.project.graphqleditor.com/graphql";
 const headers = {
   "Content-type": "application/json",
-  Key: process.env.KEY || "",
-  Team: process.env.TEAM || "",
 };
 const chain = (option: "query" | "mutation") => Chain(URL, { headers })(option);
 
@@ -15,7 +13,7 @@ export const useBackend = () => {
     dialogueId?: string
   ) => {
     try {
-      const res = await chain("query")({
+      const res = await chain("mutation")({
         createBotDialogue: [
           {
             botPayload: { payload: botPayload, role: DialogueRole.assistant },
@@ -45,7 +43,7 @@ export const useBackend = () => {
   };
   const triggerFintTunning = () => {
     try {
-      chain("query")({ useFineTuneJob: true });
+      chain("mutation")({ useFineTuneJob: true });
     } catch {}
   };
 

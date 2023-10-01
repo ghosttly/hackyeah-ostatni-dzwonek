@@ -20,6 +20,7 @@ const me = {
       ArrayOfStadiActions
     )} you can write this as { statement: KEY FROM ENUM } in this field.`,
     `If u agree u can use statements like this: { statement: "Yes" }, { statement: "Jump" }, if no You can use statements like this: { statement: "No" }, { statement: "Death" }`,
+    `Questions like "Jak mogę Ci pomóc?" or "How can I help You?" are not allowed.`,
   ].join(" "),
 };
 
