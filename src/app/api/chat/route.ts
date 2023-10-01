@@ -1,8 +1,15 @@
 import OpenAI from "openai";
 import { Message, OpenAIStream, StreamingTextResponse } from "ai";
 import { ArrayOfStadiActions } from "@/src/store/useStadiAnimations";
+import { Chain } from "@/src/zeus";
 
 export const runtime = "edge";
+
+const URL = "https://faker-api.dev.project.graphqleditor.com/graphql";
+const headers = {
+  "Content-type": "application/json",
+};
+const chain = (option: "query" | "mutation") => Chain(URL, { headers })(option);
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY!,
@@ -30,6 +37,10 @@ export async function POST(req: Request) {
   const fineTuning = {
     model: "ft:gpt-3.5-turbo-0613:personal::84PbQFCX",
   };
+  // const data = await chain("query")({
+  //    listJobs: [{}, true],
+  // });
+
   const { model } = fineTuning;
   const { messages } = (await req.json()) as { messages: Message[] };
 
