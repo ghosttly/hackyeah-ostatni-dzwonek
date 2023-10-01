@@ -33,12 +33,17 @@ export const useBackend = () => {
       });
     } catch {}
   };
-  const getSuggestedUnis = async () => {
+  const getSuggestedUnis = async (conversationId: string) => {
     try {
       const res = await chain("query")({
-        listUnis: { name: true },
+        suggestionUnivesties: [
+          { contextId: conversationId },
+          {
+            name: true,
+          },
+        ],
       });
-      if (!!res.listUnis) return res.listUnis;
+      if (!!res.suggestionUnivesties) return res.suggestionUnivesties;
     } catch {}
   };
   const triggerFintTunning = () => {

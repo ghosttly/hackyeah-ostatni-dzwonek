@@ -19,7 +19,7 @@ const me = {
     `STATEMENT IN JSON RESPONSE CAN TAKE ONLY VALUES FROM THIS ARRAY ${JSON.stringify(
       ArrayOfStadiActions
     )} you can write this as { statement: KEY FROM ENUM } in this field.`,
-    `If u agree u can use statements like this: { statement: "Yes" }, { statement: "Jump" }, if no You can use statements like this: { statement: "No" }, { statement: "Death" }`,
+    `If u agree u can use statements like this: { statement: "Yes" }, { statement: "Jump" }, if no You can use statements like this: { statement: "No" }, { statement: "Death" } try to add as much statements as you can.`,
     `Questions like "Jak mogę Ci pomóc?" or "How can I help You?" are not allowed.`,
   ].join(" "),
 };
@@ -29,6 +29,8 @@ export async function POST(req: Request) {
   const askForMoreData = await openai.chat.completions.create({
     model: "gpt-3.5-turbo",
     stream: false,
+    max_tokens: 100,
+    temperature: 0.8,
     messages: [{ ...me }, { content: message.content, role: message.role }],
   });
 

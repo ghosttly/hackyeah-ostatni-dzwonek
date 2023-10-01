@@ -4,7 +4,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { Scene } from "./Scene";
 import { useChat } from "ai/react";
 import { Message } from "./Message";
-
+import Link from "next/link";
+import { useStadiStore } from "@/src/store/useStadiAnimations";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Hearth } from "../assets/icons/Hearth";
@@ -20,8 +21,6 @@ const askAssistant = async (message: MessageType) => {
   return data;
 };
 
-import Link from "next/link";
-import { useStadiStore } from "@/src/store/useStadiAnimations";
 export const Chat = () => {
   const {
     praiseTheConverstaion,
@@ -29,23 +28,24 @@ export const Chat = () => {
     createDialogue,
     triggerFintTunning,
   } = useBackend();
-  const { setConversationId, conversationId } = useStadiStore((state) => ({
-    setConversationId: state.setConversationId,
-    conversationId: state.conversationId,
-  }));
+  const { setConversationId, conversationId, setConversationAnimation } =
+    useStadiStore((state) => ({
+      setConversationId: state.setConversationId,
+      conversationId: state.conversationId,
+      setConversationAnimation: state.setConversationAnimation,
+    }));
   const [showBubble, setShowBubble] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [suggestedUnis, setSuggestedUnis] = useState<
-    { name: string }[] | undefined
+    { name?: string }[] | undefined
   >([]);
 
   const { messages, input, handleInputChange, handleSubmit } = useChat({
     onFinish: async (d) => {
       handleMsgContainerScroll();
       setIsLoading(false);
-      console.log(d);
-      console.log("dupa");
-      const sugesteddUnis = await getSuggestedUnis();
+      if (!conversationId) return;
+      const sugesteddUnis = await getSuggestedUnis(conversationId);
       if (!!sugesteddUnis) setSuggestedUnis(sugesteddUnis);
       const res = await createDialogue(
         messages[messages.length - 1].content,
@@ -53,7 +53,6 @@ export const Chat = () => {
         conversationId
       );
       if (res) setConversationId(res);
-      console.log(res);
     },
     onError: () => setIsLoading(false),
     onResponse: () => {
@@ -92,7 +91,7 @@ export const Chat = () => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const pathname = usePathname();
   const language = pathname.slice(0, 3);
-  console.log(language);
+
   return (
     <>
       <div className="absolute top-0 text-black left-0 z-10 h-screen w-full flex flex-col  lg:relative lg:w-3/4 p-[0.2rem] xl:w-1/2 ">
@@ -162,7 +161,7 @@ export const Chat = () => {
             <div className=" h-[5.8rem] p-[0.6rem] flex gap-[1.6rem] pr-[2rem]">
               <form
                 onSubmit={async (e) => {
-                  if (isLoading) return;
+                  e.preventDefault();
                   handleSubmit(e);
                   if (messages.length >= 2) {
                     const data = await askAssistant(
@@ -170,8 +169,14 @@ export const Chat = () => {
                     );
                     try {
                       const parsed = JSON.parse(data);
-                      if ("statement" in parsed) {
-                        console.log(parsed.statement);
+                      console.log(parsed);
+                      if (
+                        "statement" in parsed ||
+                        ("data" in parsed && "statement" in parsed.data)
+                      ) {
+                        setConversationAnimation(
+                          parsed.statement ?? parsed.data.statement
+                        );
                       }
                     } catch {}
                   }
