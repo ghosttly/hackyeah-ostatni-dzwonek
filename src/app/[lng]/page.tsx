@@ -37,12 +37,15 @@ export default async function Home({
         <div className="absolute top-0 left-0 bg-white w-full h-full -z-10 opacity-50" />
       </div>
       <Link
-        className="text-[2rem] sm:text-[3.2rem] mt-9 font-v323 py-8 px-20 bg-button-background border-2 text-black border-black"
+        className="hover:bg-main-green-l transition-colors text-[2rem] sm:text-[3.2rem] mt-9 font-v323 py-8 px-20 bg-button-background border-2 text-black border-black"
         href={`/${lng}/chat`}
       >
         {t("ctaBtn")}
       </Link>
       <Portret />
+      {/* <footer className="absolute bottom-0 left-0 w-full py-[1rem] h-[4rem] text-black text-[1.6rem] text-center">
+        Copyright &copy; 2023 AEXOL, Sp. z o.o. Wszelkie prawa zastrzeżone.
+      </footer> */}
     </main>
   );
 }

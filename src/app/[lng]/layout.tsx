@@ -44,6 +44,12 @@ export default function RootLayout({
         <Background />
 
         {children}
+        <footer className="absolute bottom-0 left-0 w-full py-[1rem] h-[4rem] text-black text-[1.6rem] text-center">
+          Copyright &copy; 2023 AEXOL
+          <span className="hidden md:inline-block">
+            , Sp. z o.o. Wszelkie prawa zastrzeżone.
+          </span>
+        </footer>
       </body>
     </html>
   );

@@ -9,7 +9,7 @@ export const Hearth: FC<{ onClick: () => void; showBubble: boolean }> = ({
     <div className="relative" onClick={onClick}>
       <div
         className={cn(
-          "absolute p-[0.4rem] w-max right-[10px] lg:-right-[370%] bottom-[calc(100%+15px)] bg-[#FFFFFF80] hidden text-[1.6rem] ",
+          "select-none absolute p-[0.4rem] w-max right-[10px] lg:-right-[370%] bottom-[calc(100%+15px)] bg-[#FFFFFF80] hidden text-[1.6rem] ",
           showBubble && "block"
         )}
       >
