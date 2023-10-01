@@ -1,7 +1,7 @@
 /* eslint-disable */
 
 import { AllTypesProps, ReturnTypes, Ops } from './const';
-export const HOST = "http://faker-api.dev.project.graphqleditor.com/graphql"
+export const HOST = "https://faker-api.dev.project.graphqleditor.com/graphql"
 
 
 export const HEADERS = {}
@@ -830,8 +830,7 @@ export type ScalarCoders = {
 type ZEUS_UNIONS = never
 
 export type ValueTypes = {
-    ["DialogueRole"]:DialogueRole;
-	["Query"]: AliasType<{
+    ["Query"]: AliasType<{
 	listJobs?:ValueTypes["Job"],
 	listUnis?:ValueTypes["University"],
 suggestionUnivesties?: [{	contextId: string | Variable<any, string>},ValueTypes["Path"]],
@@ -867,12 +866,12 @@ reactOnConversation?: [{	conversationId: string | Variable<any, string>,	reactio
 	testEndpoint?:boolean | `@${string}`,
 	useFineTuneJob?:boolean | `@${string}`,
 		__typename?: boolean | `@${string}`
-}>
+}>;
+	["DialogueRole"]:DialogueRole
   }
 
 export type ResolverInputTypes = {
-    ["DialogueRole"]:DialogueRole;
-	["Query"]: AliasType<{
+    ["Query"]: AliasType<{
 	listJobs?:ResolverInputTypes["Job"],
 	listUnis?:ResolverInputTypes["University"],
 suggestionUnivesties?: [{	contextId: string},ResolverInputTypes["Path"]],
@@ -909,6 +908,7 @@ reactOnConversation?: [{	conversationId: string,	reaction: boolean},boolean | `@
 	useFineTuneJob?:boolean | `@${string}`,
 		__typename?: boolean | `@${string}`
 }>;
+	["DialogueRole"]:DialogueRole;
 	["schema"]: AliasType<{
 	query?:ResolverInputTypes["Query"],
 	mutation?:ResolverInputTypes["Mutation"],
@@ -917,8 +917,7 @@ reactOnConversation?: [{	conversationId: string,	reaction: boolean},boolean | `@
   }
 
 export type ModelTypes = {
-    ["DialogueRole"]:DialogueRole;
-	["Query"]: {
+    ["Query"]: {
 		listJobs: Array<ModelTypes["Job"]>,
 	listUnis: Array<ModelTypes["University"]>,
 	suggestionUnivesties?: Array<ModelTypes["Path"]> | undefined
@@ -950,6 +949,7 @@ export type ModelTypes = {
 	testEndpoint?: boolean | undefined,
 	useFineTuneJob: boolean
 };
+	["DialogueRole"]:DialogueRole;
 	["schema"]: {
 	query?: ModelTypes["Query"] | undefined,
 	mutation?: ModelTypes["Mutation"] | undefined
@@ -957,8 +957,7 @@ export type ModelTypes = {
     }
 
 export type GraphQLTypes = {
-    ["DialogueRole"]: DialogueRole;
-	["Query"]: {
+    ["Query"]: {
 	__typename: "Query",
 	listJobs: Array<GraphQLTypes["Job"]>,
 	listUnis: Array<GraphQLTypes["University"]>,
@@ -994,7 +993,8 @@ export type GraphQLTypes = {
 	reactOnConversation: boolean,
 	testEndpoint?: boolean | undefined,
 	useFineTuneJob: boolean
-}
+};
+	["DialogueRole"]: DialogueRole
     }
 export const enum DialogueRole {
 	assistant = "assistant",
@@ -1002,6 +1002,6 @@ export const enum DialogueRole {
 }
 
 type ZEUS_VARIABLES = {
-	["DialogueRole"]: ValueTypes["DialogueRole"];
 	["DialogueInput"]: ValueTypes["DialogueInput"];
+	["DialogueRole"]: ValueTypes["DialogueRole"];
 }

@@ -40,19 +40,20 @@ export const Chat = () => {
   >([]);
 
   useEffect(() => {
+    if (conversationId) return;
     (async () => {
       const res = await createDialogue();
       if (res) setConversationId(res);
       console.log(res);
     })();
-  }, []);
+  }, [conversationId]);
 
   const { messages, input, handleInputChange, handleSubmit } = useChat({
     onFinish: async () => {
       handleMsgContainerScroll();
       setIsLoading(false);
-      const res = await getSuggestedUnis();
-      if (!!res) setSuggestedUnis(res);
+      // const res = await getSuggestedUnis();
+      // if (!!res) setSuggestedUnis(res);
     },
     onError: () => setIsLoading(false),
     onResponse: () => {
@@ -85,7 +86,7 @@ export const Chat = () => {
       }
       setTimeout(() => setShowBubble(false), 2000);
     }
-  }, [showBubble, conversationId, praiseTheconverstaion]);
+  }, [showBubble, conversationId]);
 
   const msgContainerRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -173,6 +174,7 @@ export const Chat = () => {
             <div className=" h-[5.8rem] p-[0.6rem] flex gap-[1.6rem] pr-[2rem]">
               <form
                 onSubmit={async (e) => {
+                  if (isLoading) return;
                   handleSubmit(e);
                   if (messages.length >= 2) {
                     const data = await askAssistant(
@@ -193,7 +195,6 @@ export const Chat = () => {
               >
                 <input
                   placeholder="Co chcesz wiedzieć? :)"
-                  disabled={isLoading}
                   ref={inputRef}
                   value={input}
                   onChange={handleInputChange}
