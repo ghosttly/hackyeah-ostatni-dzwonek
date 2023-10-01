@@ -22,6 +22,8 @@ const askAssistant = async (message: MessageType) => {
 };
 
 export const Chat = () => {
+  const pathname = usePathname();
+  const language = pathname.slice(0, 3);
   const {
     praiseTheConverstaion,
     getSuggestedUnis,
@@ -41,6 +43,10 @@ export const Chat = () => {
   >([]);
 
   const { messages, input, handleInputChange, handleSubmit } = useChat({
+    initialInput:
+      language === "/pl"
+        ? "Cześć! Kim jesteś i jak mi możesz pomóc?"
+        : "Hi! Who are you and how can you help me?",
     onFinish: async (d) => {
       handleMsgContainerScroll();
       setIsLoading(false);
@@ -89,8 +95,6 @@ export const Chat = () => {
 
   const msgContainerRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const pathname = usePathname();
-  const language = pathname.slice(0, 3);
 
   return (
     <>
