@@ -19,7 +19,6 @@ const system = {
   role: "system" as const,
   content: [
     "Just the JSON data with no syntax errors.",
-    `The chat data should alternate "role": "user" and "role": "assistant".`,
     `Only include the JSON data in your response (otherwise, there will be an error in my program).`,
     `Write me a JSON file in conversational chat format for fine tuning (gpt-3.5-turbo) based on the following data?`,
     `Integrality of the data should be considered.`,
