@@ -35,7 +35,6 @@ export const ArrayOfStadiActions: StadiActions[] = [
 ];
 
 type StadiStore = {
-  conversationId?: string;
   stadiActions: {
     [key: string]: AnimationAction;
   };
@@ -44,6 +43,9 @@ type StadiStore = {
   }) => void;
   playAction: (actionName: StadiActions) => void;
   stopAction: (actionName: StadiActions) => void;
+  setConversationAnimation: (animation: string) => void;
+
+  conversationId?: string;
   setConversationId: (conversationId: string) => void;
 };
 
@@ -72,12 +74,24 @@ export const useStadiStore = create<StadiStore>()((set, get) => {
   const setConversationId = (conversationId: string) => {
     set(() => ({ conversationId }));
   };
+
+  const setConversationAnimation = (animation: string) => {
+    const { stadiActions } = get();
+    const action = stadiActions[animation];
+    if (action) action.reset().play();
+
+    setTimeout(() => {
+      const action = stadiActions[animation];
+      if (action) action.stop();
+    }, 5000);
+  };
   return {
     stadiActions: {},
     initStadiAnimations,
     playAction,
     stopAction,
     setConversationId,
+    setConversationAnimation,
     conversationId: undefined,
   };
 });
