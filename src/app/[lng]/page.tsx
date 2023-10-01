@@ -2,6 +2,7 @@ import Link from "next/link";
 import { useTranslation } from "../i18n";
 
 import Image from "next/image";
+import { Portret } from "@/src/components/assets/portret";
 
 export default async function Home({
   params: { lng },
@@ -41,9 +42,7 @@ export default async function Home({
       >
         {t("ctaBtn")}
       </Link>
-      <div className="absolute bottom-0 right-0 w-[593px] h-[593px] -z-50">
-        <Image alt="bot portret" src={"/images/portret.png"} fill />
-      </div>
+      <Portret />
     </main>
   );
 }
