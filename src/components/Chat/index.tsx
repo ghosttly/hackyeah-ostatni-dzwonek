@@ -12,14 +12,21 @@ import { useBackend } from "@/src/app/api/chat/useBackend";
 import Link from "next/link";
 import { useStadiStore } from "@/src/store/useStadiAnimations";
 export const Chat = () => {
-  const { praiseTheconverstaion, getSuggestedTags, createDialogue } =
-    useBackend();
+  const {
+    praiseTheconverstaion,
+    getSuggestedUnis,
+    createDialogue,
+    triggerFintTunning,
+  } = useBackend();
   const { setConversationId, conversationId } = useStadiStore((state) => ({
     setConversationId: state.setConversationId,
     conversationId: state.conversationId,
   }));
   const [showBubble, setShowBubble] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [suggestedUnis, setSuggestedUnis] = useState<
+    { name: string }[] | undefined
+  >([]);
 
   useEffect(() => {
     (async () => {
@@ -30,9 +37,11 @@ export const Chat = () => {
   }, []);
 
   const { messages, input, handleInputChange, handleSubmit } = useChat({
-    onFinish: () => {
+    onFinish: async () => {
       handleMsgContainerScroll();
       setIsLoading(false);
+      const res = await getSuggestedUnis();
+      if (!!res) setSuggestedUnis(res);
     },
     onResponse: () => {
       handleMsgContainerScroll();
@@ -56,16 +65,20 @@ export const Chat = () => {
 
   useEffect(() => {
     if (showBubble) {
-      if (conversationId) praiseTheconverstaion(conversationId);
+      if (conversationId) {
+        praiseTheconverstaion(conversationId);
+        setShowBubble(false);
+        return;
+      }
       setTimeout(() => setShowBubble(false), 2000);
     }
-  }, [showBubble]);
+  }, [showBubble, conversationId, praiseTheconverstaion]);
 
   const msgContainerRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const pathname = usePathname();
   const language = pathname.slice(0, 3);
-
+  console.log(language);
   return (
     <>
       <div className="absolute top-0 text-black left-0 z-10 h-screen w-full flex flex-col  lg:relative lg:w-3/4 p-[0.2rem] xl:w-1/2 ">
@@ -75,7 +88,11 @@ export const Chat = () => {
             width={201}
             height={91}
             alt="ostatni dzwonek logo"
-            src="/images/logo.png"
+            src={
+              language.includes("en")
+                ? "/images/logo_eng.png"
+                : "/images/logo.png"
+            }
           />
         </Link>
         <div className="flex flex-col md:flex-row gap-[1.6rem] mx-[1.4rem] lg:mr-0 mb-[5rem]">
@@ -86,7 +103,27 @@ export const Chat = () => {
               </h3>
             </div>
             <div className="md:h-[calc(100vh-91px-6.4rem-5rem)]  custom-scrollbar overflow-x-scroll md:overflow-y-scroll md:overflow-x-auto flex md:flex-col gap-[1.4rem] p-[1.4rem]">
-              {Array(100)
+              {!!suggestedUnis?.length ? (
+                suggestedUnis.map(({ name }) => (
+                  <p
+                    className="text-[1.6rem] bg-white text-center shrink-0 max-w-[400px] p-[0.4rem]"
+                    key={name}
+                  >
+                    {name}
+                  </p>
+                ))
+              ) : language.includes("pl") ? (
+                <p className="text-[1.6rem] bg-white text-center shrink-0 max-w-[400px] p-[0.4rem]">
+                  Brak sugerowanych uczelni :(
+                </p>
+              ) : (
+                <p className="text-[1.6rem] bg-white text-center shrink-0 max-w-[400px] p-[0.4rem]">
+                  {" "}
+                  There are no sugestted universities yet :(
+                </p>
+              )}
+
+              {/* {Array(100)
                 .fill("Jakieś przykładowe pytania coś tam coś tam")
                 .map((t, i) => (
                   <p
@@ -95,7 +132,7 @@ export const Chat = () => {
                   >
                     {t}
                   </p>
-                ))}
+                ))} */}
             </div>
           </div>
           <div className="bg-[#FFFFFF80] grow">
@@ -126,6 +163,7 @@ export const Chat = () => {
                   handleSubmit(e);
                   handleMsgContainerScroll();
                   setIsLoading(true);
+                  triggerFintTunning();
                 }}
                 className="h-full bg-white rounded-full p-[0.4rem] px-[1rem] flex grow "
               >

@@ -1,4 +1,3 @@
-import { useStadiStore } from "@/src/store/useStadiAnimations";
 import { Chain, DialogueRole } from "@/src/zeus";
 
 const URL = "https://faker-api.dev.project.graphqleditor.com/graphql";
@@ -32,33 +31,24 @@ export const useBackend = () => {
       });
     } catch {}
   };
-  const getSuggestedTags = async (contextId: string) => {
-    try {
-      await chain("query")({
-        listUnis: { name: true, paths: { _id: true, name: true, tags: true } },
-      });
-    } catch {}
-  };
-  const startFineTuning = async () => {
-    try {
-      await chain("query")({ useFineTuneJob: true });
-    } catch {}
-  };
-
-  const getfineTuneConversations = async () => {
+  const getSuggestedUnis = async () => {
     try {
       const res = await chain("query")({
-        listJobs: { conversationCountWhenCreated: true },
+        listUnis: { name: true },
       });
-      return res;
+      if (!!res.listUnis) return res.listUnis;
+    } catch {}
+  };
+  const triggerFintTunning = () => {
+    try {
+      chain("query")({ useFineTuneJob: true });
     } catch {}
   };
 
   return {
     createDialogue,
     praiseTheconverstaion,
-    getSuggestedTags,
-    startFineTuning,
-    getfineTuneConversations,
+    getSuggestedUnis,
+    triggerFintTunning,
   };
 };
