@@ -6,8 +6,7 @@ import Link from "next/link";
 import React, { FC } from "react";
 import { PL } from "../assets/flags/PL";
 import { US } from "../assets/flags/US";
-import { usePathname, useSearchParams } from "next/navigation";
-import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
 
 export const Navbar: FC<{ lng: string }> = ({ lng }) => {
   const pathname = usePathname().slice(4);
@@ -22,15 +21,15 @@ export const Navbar: FC<{ lng: string }> = ({ lng }) => {
               return (
                 <span key={l}>
                   <Link
-                    className="flex text-[1.6rem] items-center justify-center gap-2 text-black font-semibold"
+                    className="flex text-[2rem] items-center justify-center gap-2 text-black font-semibold"
                     href={`/${l}${pathname === "/" ? "" : "/" + pathname}`}
                   >
                     {l === "en" ? (
-                      <div className="w-6 h-6 flex">
+                      <div className="w-16 h-16 flex">
                         <US />
                       </div>
                     ) : (
-                      <div className="h-6 w-6 flex">
+                      <div className="h-16 w-16 flex">
                         <PL />
                       </div>
                     )}

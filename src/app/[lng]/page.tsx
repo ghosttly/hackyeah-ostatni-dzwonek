@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { useTranslation } from "../i18n";
-import { Navbar } from "@/src/components/Navbar";
+
+import Image from "next/image";
 
 export default async function Home({
   params: { lng },
@@ -11,9 +12,17 @@ export default async function Home({
 
   return (
     <main className="flex h-screen relative flex-col items-center justify-center  lg:pl-[88px] lg:items-start">
-      <Navbar lng={lng} />
+      <Image
+        className="mb-[10rem]"
+        width={402}
+        height={182}
+        alt="ostatni dzwonek logo"
+        src={lng === "en" ? "/images/logo_eng.png" : "/images/logo.png"}
+      />
       <div className="flex  justify-center text-[3rem] sm:text-[4.4rem] text-black mx-5 flex-col lg:mx-0 font-v323 p-6 overflow-hidden relative h-min">
-        <h1 className="text-center sm:text-left ">{t("heroTitle.heading")}</h1>
+        <h1 className="text-center sm:text-left leading-10 ">
+          {t("heroTitle.heading")}
+        </h1>
         <h2 className="text-center sm:text-left mb-7">
           {t("heroTitle.subHeading")}
         </h2>

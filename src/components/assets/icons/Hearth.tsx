@@ -19,7 +19,7 @@ export const Hearth: FC<{ onClick: () => void; showBubble: boolean }> = ({
       </div>
       <svg
         className="cursor-pointer"
-        width="56"
+        width="40"
         height="48"
         viewBox="0 0 56 48"
         fill="none"

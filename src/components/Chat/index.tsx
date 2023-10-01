@@ -20,10 +20,25 @@ const askAssistant = async (message: MessageType) => {
   return data;
 };
 
+import Link from "next/link";
+import { useStadiStore } from "@/src/store/useStadiAnimations";
 export const Chat = () => {
-  const { praiseTheconverstaion } = useBackend();
+  const { praiseTheconverstaion, getSuggestedTags, createDialogue } =
+    useBackend();
+  const { setConversationId, conversationId } = useStadiStore((state) => ({
+    setConversationId: state.setConversationId,
+    conversationId: state.conversationId,
+  }));
   const [showBubble, setShowBubble] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      const res = await createDialogue();
+      if (res) setConversationId(res);
+      console.log(res);
+    })();
+  }, []);
 
   const { messages, input, handleInputChange, handleSubmit } = useChat({
     onFinish: () => {
@@ -54,6 +69,7 @@ export const Chat = () => {
 
   useEffect(() => {
     if (showBubble) {
+      if (conversationId) praiseTheconverstaion(conversationId);
       setTimeout(() => setShowBubble(false), 2000);
     }
   }, [showBubble]);
@@ -61,17 +77,20 @@ export const Chat = () => {
   const msgContainerRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const pathname = usePathname();
+  const language = pathname.slice(0, 3);
 
   return (
     <>
       <div className="absolute top-0 text-black left-0 z-10 h-screen w-full flex flex-col  lg:relative lg:w-3/4 p-[0.2rem] xl:w-1/2 ">
-        <Image
-          className="ml-[1.4rem] my-[1.4rem]"
-          width={201}
-          height={91}
-          alt="ostatni dzwonek logo"
-          src="/images/logo.png"
-        />
+        <Link href={language}>
+          <Image
+            className="ml-[1.4rem] my-[1.4rem]"
+            width={201}
+            height={91}
+            alt="ostatni dzwonek logo"
+            src="/images/logo.png"
+          />
+        </Link>
         <div className="flex flex-col md:flex-row gap-[1.6rem] mx-[1.4rem] lg:mr-0 mb-[5rem]">
           <div className="bg-[#FFFFFF80]  w-full md:w-[300px] shrink-0 flex md:flex-col h-[10rem] md:h-full">
             <div className="md:h-[7.2rem] bg-main-blue-d flex items-center">
@@ -96,8 +115,8 @@ export const Chat = () => {
             <div className="h-[7.2rem] bg-main-blue-d flex items-center pl-[1.4rem]">
               <Image
                 src={"/images/stradi.png"}
-                width={56}
-                height={56}
+                width={60}
+                height={60}
                 alt="stradi bot"
               />
               <h3 className=" text-[3.2rem] pl-[1.4rem] font-v323 ">Stadi</h3>
@@ -114,7 +133,7 @@ export const Chat = () => {
                 />
               ))}
             </div>
-            <div className="h-[5.8rem] p-[0.6rem] flex gap-[0.8rem]">
+            <div className=" h-[5.8rem] p-[0.6rem] flex gap-[1.6rem] pr-[2rem]">
               <form
                 onSubmit={async (e) => {
                   handleSubmit(e);
@@ -135,12 +154,13 @@ export const Chat = () => {
                 className="h-full bg-white rounded-full p-[0.4rem] px-[1rem] flex grow "
               >
                 <input
+                  placeholder="Co chcesz wiedzieć? :)"
+                  disabled={isLoading}
                   ref={inputRef}
                   value={input}
                   onChange={handleInputChange}
                   className="grow text-[1.6rem]"
                 />
-                {/* <button type="submit">Send</button> */}
               </form>
               <Hearth
                 showBubble={showBubble}
