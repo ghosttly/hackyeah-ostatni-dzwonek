@@ -5,7 +5,7 @@ import { Chain } from "@/src/zeus";
 
 export const runtime = "edge";
 
-const URL = "https://faker-api.dev.project.graphqleditor.com/graphql";
+const URL = process.env.BACKEND ?? "";
 const headers = {
   "Content-type": "application/json",
 };
