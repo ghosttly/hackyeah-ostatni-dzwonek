@@ -66,7 +66,9 @@ export const Chat = () => {
       );
       if (res) setConversationId(res);
     },
-    onError: () => setIsLoading(false),
+    onError: () => {
+      setIsLoading(false);
+    },
     onResponse: () => {
       handleMsgContainerScroll();
       setIsLoading(false);

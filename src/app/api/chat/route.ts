@@ -34,18 +34,14 @@ const system = {
 };
 
 export async function POST(req: Request) {
-  const fineTuning = {
-    model: "ft:gpt-3.5-turbo-0613:personal::84PbQFCX",
-  };
-  // const data = await chain("query")({
-  //    listJobs: [{}, true],
-  // });
-
-  const { model } = fineTuning;
+  const defaultModel = "ft:gpt-3.5-turbo-0613:personal::84PbQFCX";
+  const data = await chain("query")({
+    listJobs: { fineTuneModel: true },
+  });
   const { messages } = (await req.json()) as { messages: Message[] };
 
   const response = await openai.chat.completions.create({
-    model,
+    model: data.listJobs.fineTuneModel ?? defaultModel,
     stream: true,
     messages: [{ ...system }, ...messages],
     temperature: 0,
