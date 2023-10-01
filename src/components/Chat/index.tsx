@@ -9,10 +9,20 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Hearth } from "../assets/icons/Hearth";
 import { useBackend } from "@/src/app/api/chat/useBackend";
+import { Message as MessageType } from "ai";
+
+const askAssistant = async (message: MessageType) => {
+  const response = await fetch("/api/assistant", {
+    method: "POST",
+    body: JSON.stringify({ message }),
+  });
+  const data = await response.json();
+  return data;
+};
+
 export const Chat = () => {
   const { praiseTheconverstaion } = useBackend();
   const [showBubble, setShowBubble] = useState(false);
-
   const [isLoading, setIsLoading] = useState(false);
 
   const { messages, input, handleInputChange, handleSubmit } = useChat({
@@ -20,8 +30,10 @@ export const Chat = () => {
       handleMsgContainerScroll();
       setIsLoading(false);
     },
+    onError: () => setIsLoading(false),
     onResponse: () => {
       handleMsgContainerScroll();
+      setIsLoading(false);
     },
   });
 
@@ -49,6 +61,7 @@ export const Chat = () => {
   const msgContainerRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const pathname = usePathname();
+
   return (
     <>
       <div className="absolute top-0 text-black left-0 z-10 h-screen w-full flex flex-col  lg:relative lg:w-3/4 p-[0.2rem] xl:w-1/2 ">
@@ -103,15 +116,25 @@ export const Chat = () => {
             </div>
             <div className="h-[5.8rem] p-[0.6rem] flex gap-[0.8rem]">
               <form
-                onSubmit={(e) => {
+                onSubmit={async (e) => {
                   handleSubmit(e);
+                  if (messages.length >= 2) {
+                    const data = await askAssistant(
+                      messages[messages.length - 1]
+                    );
+                    try {
+                      const parsed = JSON.parse(data);
+                      if ("statement" in parsed) {
+                        console.log(parsed.statement);
+                      }
+                    } catch {}
+                  }
                   handleMsgContainerScroll();
                   setIsLoading(true);
                 }}
                 className="h-full bg-white rounded-full p-[0.4rem] px-[1rem] flex grow "
               >
                 <input
-                  disabled={isLoading}
                   ref={inputRef}
                   value={input}
                   onChange={handleInputChange}
