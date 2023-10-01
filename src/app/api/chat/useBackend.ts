@@ -24,10 +24,10 @@ export const useBackend = () => {
       if (res.createBotDialogue) return res.createBotDialogue;
     } catch {}
   };
-  const praiseTheconverstaion = async (conversationId: string) => {
+  const praiseTheConverstaion = async (conversationId: string) => {
     try {
       await chain("mutation")({
-        reactOnConversation: [{ conversationId }, true],
+        reactOnConversation: [{ conversationId, reaction: true }, true],
       });
     } catch {}
   };
@@ -47,7 +47,7 @@ export const useBackend = () => {
 
   return {
     createDialogue,
-    praiseTheconverstaion,
+    praiseTheConverstaion,
     getSuggestedUnis,
     triggerFintTunning,
   };

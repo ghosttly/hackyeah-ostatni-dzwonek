@@ -24,7 +24,7 @@ import Link from "next/link";
 import { useStadiStore } from "@/src/store/useStadiAnimations";
 export const Chat = () => {
   const {
-    praiseTheconverstaion,
+    praiseTheConverstaion,
     getSuggestedUnis,
     createDialogue,
     triggerFintTunning,
@@ -79,7 +79,7 @@ export const Chat = () => {
   useEffect(() => {
     if (showBubble) {
       if (conversationId) {
-        praiseTheconverstaion(conversationId);
+        praiseTheConverstaion(conversationId);
         setShowBubble(false);
         return;
       }
