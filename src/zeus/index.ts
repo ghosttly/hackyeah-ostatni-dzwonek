@@ -835,6 +835,22 @@ export type ValueTypes = {
 suggestionUnivesties?: [{	contextId: string | Variable<any, string>},ValueTypes["Path"]],
 		__typename?: boolean | `@${string}`
 }>;
+	["Job"]: AliasType<{
+	_id?:boolean | `@${string}`,
+	conversationCountWhenCreated?:boolean | `@${string}`,
+	createdAt?:boolean | `@${string}`,
+	files?:boolean | `@${string}`,
+	fineTuneModel?:boolean | `@${string}`,
+	tuneId?:boolean | `@${string}`,
+		__typename?: boolean | `@${string}`
+}>;
+	["Mutation"]: AliasType<{
+createBotDialogue?: [{	dialogueId?: string | undefined | null | Variable<any, string>,	userPayload: ValueTypes["DialogueInput"] | Variable<any, string>,	botPayload: ValueTypes["DialogueInput"] | Variable<any, string>},boolean | `@${string}`],
+reactOnConversation?: [{	conversationId: string | Variable<any, string>,	reaction: boolean | Variable<any, string>},boolean | `@${string}`],
+	testEndpoint?:boolean | `@${string}`,
+	useFineTuneJob?:boolean | `@${string}`,
+		__typename?: boolean | `@${string}`
+}>;
 	["Path"]: AliasType<{
 	_id?:boolean | `@${string}`,
 	name?:boolean | `@${string}`,
@@ -848,32 +864,33 @@ suggestionUnivesties?: [{	contextId: string | Variable<any, string>},ValueTypes[
 	website?:boolean | `@${string}`,
 		__typename?: boolean | `@${string}`
 }>;
+	["DialogueRole"]:DialogueRole;
 	["DialogueInput"]: {
-	role: ValueTypes["DialogueRole"] | Variable<any, string>,
-	payload: string | Variable<any, string>
-};
-	["Mutation"]: AliasType<{
-createBotDialogue?: [{	botPayload: ValueTypes["DialogueInput"] | Variable<any, string>,	dialogueId?: string | undefined | null | Variable<any, string>,	userPayload: ValueTypes["DialogueInput"] | Variable<any, string>},boolean | `@${string}`],
-reactOnConversation?: [{	conversationId: string | Variable<any, string>,	reaction: boolean | Variable<any, string>},boolean | `@${string}`],
-	testEndpoint?:boolean | `@${string}`,
-	useFineTuneJob?:boolean | `@${string}`,
-		__typename?: boolean | `@${string}`
-}>;
-	["Job"]: AliasType<{
-	_id?:boolean | `@${string}`,
-	conversationCountWhenCreated?:boolean | `@${string}`,
-	createdAt?:boolean | `@${string}`,
-	file?:boolean | `@${string}`,
-	tuneId?:boolean | `@${string}`,
-		__typename?: boolean | `@${string}`
-}>;
-	["DialogueRole"]:DialogueRole
+	payload: string | Variable<any, string>,
+	role: ValueTypes["DialogueRole"] | Variable<any, string>
+}
   }
 
 export type ResolverInputTypes = {
     ["Query"]: AliasType<{
 	listJobs?:ResolverInputTypes["Job"],
 suggestionUnivesties?: [{	contextId: string},ResolverInputTypes["Path"]],
+		__typename?: boolean | `@${string}`
+}>;
+	["Job"]: AliasType<{
+	_id?:boolean | `@${string}`,
+	conversationCountWhenCreated?:boolean | `@${string}`,
+	createdAt?:boolean | `@${string}`,
+	files?:boolean | `@${string}`,
+	fineTuneModel?:boolean | `@${string}`,
+	tuneId?:boolean | `@${string}`,
+		__typename?: boolean | `@${string}`
+}>;
+	["Mutation"]: AliasType<{
+createBotDialogue?: [{	dialogueId?: string | undefined | null,	userPayload: ResolverInputTypes["DialogueInput"],	botPayload: ResolverInputTypes["DialogueInput"]},boolean | `@${string}`],
+reactOnConversation?: [{	conversationId: string,	reaction: boolean},boolean | `@${string}`],
+	testEndpoint?:boolean | `@${string}`,
+	useFineTuneJob?:boolean | `@${string}`,
 		__typename?: boolean | `@${string}`
 }>;
 	["Path"]: AliasType<{
@@ -889,26 +906,11 @@ suggestionUnivesties?: [{	contextId: string},ResolverInputTypes["Path"]],
 	website?:boolean | `@${string}`,
 		__typename?: boolean | `@${string}`
 }>;
-	["DialogueInput"]: {
-	role: ResolverInputTypes["DialogueRole"],
-	payload: string
-};
-	["Mutation"]: AliasType<{
-createBotDialogue?: [{	botPayload: ResolverInputTypes["DialogueInput"],	dialogueId?: string | undefined | null,	userPayload: ResolverInputTypes["DialogueInput"]},boolean | `@${string}`],
-reactOnConversation?: [{	conversationId: string,	reaction: boolean},boolean | `@${string}`],
-	testEndpoint?:boolean | `@${string}`,
-	useFineTuneJob?:boolean | `@${string}`,
-		__typename?: boolean | `@${string}`
-}>;
-	["Job"]: AliasType<{
-	_id?:boolean | `@${string}`,
-	conversationCountWhenCreated?:boolean | `@${string}`,
-	createdAt?:boolean | `@${string}`,
-	file?:boolean | `@${string}`,
-	tuneId?:boolean | `@${string}`,
-		__typename?: boolean | `@${string}`
-}>;
 	["DialogueRole"]:DialogueRole;
+	["DialogueInput"]: {
+	payload: string,
+	role: ResolverInputTypes["DialogueRole"]
+};
 	["schema"]: AliasType<{
 	query?:ResolverInputTypes["Query"],
 	mutation?:ResolverInputTypes["Mutation"],
@@ -918,8 +920,22 @@ reactOnConversation?: [{	conversationId: string,	reaction: boolean},boolean | `@
 
 export type ModelTypes = {
     ["Query"]: {
-		listJobs: Array<ModelTypes["Job"]>,
+		listJobs: ModelTypes["Job"],
 	suggestionUnivesties?: Array<ModelTypes["Path"]> | undefined
+};
+	["Job"]: {
+		_id: string,
+	conversationCountWhenCreated: number,
+	createdAt: string,
+	files: Array<string>,
+	fineTuneModel?: string | undefined,
+	tuneId: string
+};
+	["Mutation"]: {
+		createBotDialogue?: string | undefined,
+	reactOnConversation: boolean,
+	testEndpoint?: boolean | undefined,
+	useFineTuneJob: boolean
 };
 	["Path"]: {
 		_id: string,
@@ -932,24 +948,11 @@ export type ModelTypes = {
 	paths: Array<ModelTypes["Path"]>,
 	website: string
 };
-	["DialogueInput"]: {
-	role: ModelTypes["DialogueRole"],
-	payload: string
-};
-	["Mutation"]: {
-		createBotDialogue?: string | undefined,
-	reactOnConversation: boolean,
-	testEndpoint?: boolean | undefined,
-	useFineTuneJob: boolean
-};
-	["Job"]: {
-		_id: string,
-	conversationCountWhenCreated: number,
-	createdAt: string,
-	file: string,
-	tuneId: string
-};
 	["DialogueRole"]:DialogueRole;
+	["DialogueInput"]: {
+	payload: string,
+	role: ModelTypes["DialogueRole"]
+};
 	["schema"]: {
 	query?: ModelTypes["Query"] | undefined,
 	mutation?: ModelTypes["Mutation"] | undefined
@@ -959,8 +962,24 @@ export type ModelTypes = {
 export type GraphQLTypes = {
     ["Query"]: {
 	__typename: "Query",
-	listJobs: Array<GraphQLTypes["Job"]>,
+	listJobs: GraphQLTypes["Job"],
 	suggestionUnivesties?: Array<GraphQLTypes["Path"]> | undefined
+};
+	["Job"]: {
+	__typename: "Job",
+	_id: string,
+	conversationCountWhenCreated: number,
+	createdAt: string,
+	files: Array<string>,
+	fineTuneModel?: string | undefined,
+	tuneId: string
+};
+	["Mutation"]: {
+	__typename: "Mutation",
+	createBotDialogue?: string | undefined,
+	reactOnConversation: boolean,
+	testEndpoint?: boolean | undefined,
+	useFineTuneJob: boolean
 };
 	["Path"]: {
 	__typename: "Path",
@@ -975,26 +994,11 @@ export type GraphQLTypes = {
 	paths: Array<GraphQLTypes["Path"]>,
 	website: string
 };
+	["DialogueRole"]: DialogueRole;
 	["DialogueInput"]: {
-		role: GraphQLTypes["DialogueRole"],
-	payload: string
-};
-	["Mutation"]: {
-	__typename: "Mutation",
-	createBotDialogue?: string | undefined,
-	reactOnConversation: boolean,
-	testEndpoint?: boolean | undefined,
-	useFineTuneJob: boolean
-};
-	["Job"]: {
-	__typename: "Job",
-	_id: string,
-	conversationCountWhenCreated: number,
-	createdAt: string,
-	file: string,
-	tuneId: string
-};
-	["DialogueRole"]: DialogueRole
+		payload: string,
+	role: GraphQLTypes["DialogueRole"]
+}
     }
 export const enum DialogueRole {
 	assistant = "assistant",
@@ -1002,6 +1006,6 @@ export const enum DialogueRole {
 }
 
 type ZEUS_VARIABLES = {
-	["DialogueInput"]: ValueTypes["DialogueInput"];
 	["DialogueRole"]: ValueTypes["DialogueRole"];
+	["DialogueInput"]: ValueTypes["DialogueInput"];
 }

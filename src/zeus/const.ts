@@ -6,25 +6,39 @@ export const AllTypesProps: Record<string,any> = {
 
 		}
 	},
-	DialogueInput:{
-		role:"DialogueRole"
-	},
 	Mutation:{
 		createBotDialogue:{
-			botPayload:"DialogueInput",
-			userPayload:"DialogueInput"
+			userPayload:"DialogueInput",
+			botPayload:"DialogueInput"
 		},
 		reactOnConversation:{
 
 		}
 	},
-	DialogueRole: "enum" as const
+	DialogueRole: "enum" as const,
+	DialogueInput:{
+		role:"DialogueRole"
+	}
 }
 
 export const ReturnTypes: Record<string,any> = {
 	Query:{
 		listJobs:"Job",
 		suggestionUnivesties:"Path"
+	},
+	Job:{
+		_id:"String",
+		conversationCountWhenCreated:"Int",
+		createdAt:"String",
+		files:"String",
+		fineTuneModel:"String",
+		tuneId:"String"
+	},
+	Mutation:{
+		createBotDialogue:"String",
+		reactOnConversation:"Boolean",
+		testEndpoint:"Boolean",
+		useFineTuneJob:"Boolean"
 	},
 	Path:{
 		_id:"String",
@@ -36,19 +50,6 @@ export const ReturnTypes: Record<string,any> = {
 		name:"String",
 		paths:"Path",
 		website:"String"
-	},
-	Mutation:{
-		createBotDialogue:"String",
-		reactOnConversation:"Boolean",
-		testEndpoint:"Boolean",
-		useFineTuneJob:"Boolean"
-	},
-	Job:{
-		_id:"String",
-		conversationCountWhenCreated:"Int",
-		createdAt:"String",
-		file:"String",
-		tuneId:"String"
 	}
 }
 
