@@ -12,13 +12,13 @@ export default async function Home({
 
   return (
     <main className="flex h-screen relative flex-col items-center justify-center  lg:pl-[88px] lg:items-start">
-      <Image
-        className="mb-[10rem]"
-        width={402}
-        height={182}
-        alt="ostatni dzwonek logo"
-        src={lng === "en" ? "/images/logo_eng.png" : "/images/logo.png"}
-      />
+      <div className="relative w-[201px] h-[91px] md:w-[402px] md:h-[182px] mb-[2rem] md:mb-[10rem]">
+        <Image
+          fill
+          alt="ostatni dzwonek logo"
+          src={lng === "en" ? "/images/logo_eng.png" : "/images/logo.png"}
+        />
+      </div>
       <div className="flex  justify-center text-[3rem] sm:text-[4.4rem] text-black mx-5 flex-col lg:mx-0 font-v323 p-6 overflow-hidden relative h-min">
         <h1 className="text-center sm:text-left leading-10 ">
           {t("heroTitle.heading")}

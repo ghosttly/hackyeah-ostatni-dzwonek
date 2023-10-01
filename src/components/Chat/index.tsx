@@ -99,9 +99,29 @@ export const Chat = () => {
   return (
     <>
       <div className="absolute top-0 text-black left-0 z-10 h-screen w-full flex flex-col  lg:relative lg:w-3/4 p-[0.2rem] xl:w-1/2 ">
-        <Link href={language}>
+        <Link
+          href={language}
+          className="flex items-center ml-[1.4rem] my-[1.4rem] gap-[2rem]"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            xmlSpace="preserve"
+            width="40"
+            height="40"
+            shape-rendering="geometricPrecision"
+            text-rendering="geometricPrecision"
+            image-rendering="optimizeQuality"
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            viewBox="0 0 298 511.93"
+          >
+            <path
+              fill-rule="nonzero"
+              d="M285.77 441c16.24 16.17 16.32 42.46.15 58.7-16.16 16.24-42.45 16.32-58.69.16l-215-214.47c-16.24-16.16-16.32-42.45-.15-58.69L227.23 12.08c16.24-16.17 42.53-16.09 58.69.15 16.17 16.24 16.09 42.54-.15 58.7l-185.5 185.04L285.77 441z"
+            />
+          </svg>
           <Image
-            className="ml-[1.4rem] my-[1.4rem]"
+            className=""
             width={201}
             height={91}
             alt="ostatni dzwonek logo"
@@ -123,19 +143,20 @@ export const Chat = () => {
               {!!suggestedUnis?.length ? (
                 suggestedUnis.map(({ name }) => (
                   <p
-                    className="text-[1.6rem] bg-white text-center shrink-0 max-w-[400px] p-[0.4rem]"
+                    className="text-[1.6rem] bg-white text-center shrink-0 max-w-[400px] p-[0.4rem] select-none cursor-pointer"
                     key={name}
                   >
-                    {name}
+                    &#127979; {name}
                   </p>
                 ))
               ) : language.includes("pl") ? (
-                <p className="text-[1.6rem] bg-white text-center shrink-0 max-w-[400px] p-[0.4rem]">
-                  Brak sugerowanych uczelni :(
+                <p className="text-[1.6rem] bg-white text-center shrink-0 max-w-[400px] p-[0.4rem] tracking-tighter select-none ">
+                  &#127979; Brak <br />
+                  sugerowanych uczelni :(
                 </p>
               ) : (
-                <p className="text-[1.6rem] bg-white text-center shrink-0 max-w-[400px] p-[0.4rem]">
-                  There are no sugestted universities yet :(
+                <p className="text-[1.6rem] bg-white text-center shrink-0 max-w-[400px] p-[0.4rem] tracking-tighter select-none">
+                  &#127979; There are <br /> no sugestted universities yet :(
                 </p>
               )}
             </div>
@@ -191,7 +212,11 @@ export const Chat = () => {
                 className="h-full bg-white rounded-full p-[0.4rem] px-[1rem] flex grow "
               >
                 <input
-                  placeholder="Co chcesz wiedzieć? :)"
+                  placeholder={
+                    language.includes("en")
+                      ? "What you want to know ? :)"
+                      : "Co chcesz wiedzieć? :)"
+                  }
                   ref={inputRef}
                   value={input}
                   onChange={handleInputChange}
