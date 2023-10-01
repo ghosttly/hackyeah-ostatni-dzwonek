@@ -5,7 +5,7 @@ import { Chain } from "@/src/zeus";
 
 export const runtime = "edge";
 
-const URL = "https://faker-api.dev.project.graphqleditor.com/graphql";
+const URL = process.env.BACKEND ?? "";
 const headers = {
   "Content-type": "application/json",
 };
@@ -19,7 +19,6 @@ const system = {
   role: "system" as const,
   content: [
     "Just the JSON data with no syntax errors.",
-    `The chat data should alternate "role": "user" and "role": "assistant".`,
     `Only include the JSON data in your response (otherwise, there will be an error in my program).`,
     `Write me a JSON file in conversational chat format for fine tuning (gpt-3.5-turbo) based on the following data?`,
     `Integrality of the data should be considered.`,
@@ -29,19 +28,26 @@ const system = {
     `STATEMENT IN JSON RESPONSE CAN TAKE ONLY VALUES FROM THIS ARRAY ${JSON.stringify(
       ArrayOfStadiActions
     )}`,
-    `If this is first message in conversation, you should write in language with user talks something like that "Hello, I am Stadi. I am a chatbot that helps teenagers to choose their next major at Cracow colleges. You will be asked to answer questions about the majors and Cracow colleges."`,
+    `If this is first message in conversation, you should wrote back in language which user wrote to you. And you welcome message is u have to translate it if needed: "Hello, I am Stadi. I am a chatbot that helps teenagers to choose their next major at Cracow colleges. You will be asked to answer questions about the majors and Cracow colleges."`,
   ].join(" "),
 };
 
 export async function POST(req: Request) {
   const defaultModel = "ft:gpt-3.5-turbo-0613:personal::84PbQFCX";
-  const data = await chain("query")({
-    listJobs: { fineTuneModel: true },
-  });
+  let data;
+  try {
+    data = await chain("query")({
+      listJobs: true,
+    });
+  } catch {
+    data = { listJobs: undefined };
+  }
+  console.log(`FT Model exists ${!!data.listJobs}`);
+
   const { messages } = (await req.json()) as { messages: Message[] };
 
   const response = await openai.chat.completions.create({
-    model: data.listJobs.fineTuneModel ?? defaultModel,
+    model: (data.listJobs as string) ?? defaultModel,
     stream: true,
     messages: [{ ...system }, ...messages],
     temperature: 0,

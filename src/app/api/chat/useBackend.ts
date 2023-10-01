@@ -1,6 +1,6 @@
 import { Chain, DialogueRole } from "@/src/zeus";
 
-const URL = "https://faker-api.dev.project.graphqleditor.com/graphql";
+const URL = process.env.BACKEND ?? "";
 const headers = {
   "Content-type": "application/json",
 };

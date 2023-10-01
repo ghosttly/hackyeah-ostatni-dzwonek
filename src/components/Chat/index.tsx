@@ -40,10 +40,7 @@ export const Chat = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [suggestedUnis, setSuggestedUnis] = useState<
     | {
-        university: {
-          name: string;
-          website: string;
-        };
+        university: { name: string; website: string };
       }[]
     | undefined
   >([]);
@@ -59,12 +56,14 @@ export const Chat = () => {
       if (!conversationId) return;
       const sugesteddUnis = await getSuggestedUnis(conversationId);
       if (!!sugesteddUnis) setSuggestedUnis(sugesteddUnis);
-      const res = await createDialogue(
-        messages[messages.length - 1].content,
-        d.content,
-        conversationId
-      );
-      if (res) setConversationId(res);
+      if (messages.length > 1) {
+        const res = await createDialogue(
+          messages[messages.length - 1].content,
+          d.content,
+          conversationId
+        );
+        if (res) setConversationId(res);
+      }
     },
     onError: () => {
       setIsLoading(false);
