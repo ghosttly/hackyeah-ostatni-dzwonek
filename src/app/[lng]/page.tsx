@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useTranslation } from "../i18n";
-import { Navbar } from "@/src/components/Navbar";
+
 import Image from "next/image";
 
 export default async function Home({
@@ -12,13 +12,12 @@ export default async function Home({
 
   return (
     <main className="flex h-screen relative flex-col items-center justify-center  lg:pl-[88px] lg:items-start">
-      <Navbar lng={lng} />
       <Image
-        className="my-[1.4rem]"
-        width={201}
-        height={91}
+        className="mb-[10rem]"
+        width={402}
+        height={182}
         alt="ostatni dzwonek logo"
-        src="/images/logo.png"
+        src={lng === "en" ? "/images/logo_eng.png" : "/images/logo.png"}
       />
       <div className="flex  justify-center text-[3rem] sm:text-[4.4rem] text-black mx-5 flex-col lg:mx-0 font-v323 p-6 overflow-hidden relative h-min">
         <h1 className="text-center sm:text-left leading-10 ">

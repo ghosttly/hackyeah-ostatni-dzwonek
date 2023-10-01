@@ -10,11 +10,24 @@ import { usePathname } from "next/navigation";
 import { Hearth } from "../assets/icons/Hearth";
 import { useBackend } from "@/src/app/api/chat/useBackend";
 import Link from "next/link";
+import { useStadiStore } from "@/src/store/useStadiAnimations";
 export const Chat = () => {
-  const { praiseTheconverstaion } = useBackend();
+  const { praiseTheconverstaion, getSuggestedTags, createDialogue } =
+    useBackend();
+  const { setConversationId, conversationId } = useStadiStore((state) => ({
+    setConversationId: state.setConversationId,
+    conversationId: state.conversationId,
+  }));
   const [showBubble, setShowBubble] = useState(false);
-
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      const res = await createDialogue();
+      if (res) setConversationId(res);
+      console.log(res);
+    })();
+  }, []);
 
   const { messages, input, handleInputChange, handleSubmit } = useChat({
     onFinish: () => {
@@ -43,6 +56,7 @@ export const Chat = () => {
 
   useEffect(() => {
     if (showBubble) {
+      if (conversationId) praiseTheconverstaion(conversationId);
       setTimeout(() => setShowBubble(false), 2000);
     }
   }, [showBubble]);
@@ -51,7 +65,7 @@ export const Chat = () => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const pathname = usePathname();
   const language = pathname.slice(0, 3);
-  console.log(language);
+
   return (
     <>
       <div className="absolute top-0 text-black left-0 z-10 h-screen w-full flex flex-col  lg:relative lg:w-3/4 p-[0.2rem] xl:w-1/2 ">
@@ -123,7 +137,6 @@ export const Chat = () => {
                   onChange={handleInputChange}
                   className="grow text-[1.6rem]"
                 />
-                {/* <button type="submit">Send</button> */}
               </form>
               <Hearth
                 showBubble={showBubble}
